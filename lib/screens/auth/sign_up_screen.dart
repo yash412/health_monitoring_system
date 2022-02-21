@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
-import 'components/sign_up_form.dart';
+import 'components/registration/patient_registration.dart';
 
 class SignUpScreen extends StatelessWidget {
-  // It's time to validat the text field
+  // It's time to validate the text field
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -54,7 +54,8 @@ class SignUpScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: defaultPadding * 2),
-                    SignUpForm(formKey: _formKey),
+                    // SignUpForm(formKey: _formKey),
+                       PatientRegistration(formKey: _formKey),
                     const SizedBox(height: defaultPadding * 2),
                     SizedBox(
                       width: double.infinity,
