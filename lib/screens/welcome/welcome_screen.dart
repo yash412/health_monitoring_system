@@ -1,8 +1,10 @@
 import 'package:health_monitoring_system/constants.dart';
+import 'package:health_monitoring_system/screens/auth/choose_user.dart';
 import 'package:health_monitoring_system/screens/auth/sign_in_screen.dart';
 import 'package:health_monitoring_system/screens/auth/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -32,7 +34,7 @@ class WelcomeScreen extends StatelessWidget {
                       onPressed: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => SignUpScreen(),
+                          builder: (context) => ChooseUser(),
                         ),
                       ),
                       style: TextButton.styleFrom(
