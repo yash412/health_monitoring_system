@@ -20,6 +20,7 @@ class SignUpScreen extends StatelessWidget {
         children: [
           SvgPicture.asset(
             "assets/icons/Sign_Up_bg.svg",
+            fit: BoxFit.cover,
             height: MediaQuery.of(context).size.height,
             // Now it takes 100% of our height
           ),
