@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
+import 'components/registration/lab_registration.dart';
 import 'components/registration/patient_registration.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -56,7 +57,7 @@ class SignUpScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: defaultPadding * 2),
                     // SignUpForm(formKey: _formKey),
-                       PatientRegistration(formKey: _formKey),
+                    labRegristration(formKey: _formKey),
                     const SizedBox(height: defaultPadding * 2),
                     SizedBox(
                       width: double.infinity,
