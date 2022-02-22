@@ -1,4 +1,5 @@
 import 'package:health_monitoring_system/constants.dart';
+import 'package:health_monitoring_system/screens/auth/components/registration/doctor_registration.dart';
 import 'package:health_monitoring_system/screens/auth/sign_in_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -47,7 +48,7 @@ class SignUpScreen extends StatelessWidget {
                               MaterialPageRoute(
                                 builder: (context) => SignInScreen(),
                               )),
-                          child: Text(
+                          child: const Text(
                             "Sign In!",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
@@ -56,7 +57,7 @@ class SignUpScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: defaultPadding * 2),
                     // SignUpForm(formKey: _formKey),
-                       PatientRegistration(formKey: _formKey),
+                       DoctorRegistration(formKey: _formKey),
                     const SizedBox(height: defaultPadding * 2),
                     SizedBox(
                       width: double.infinity,
