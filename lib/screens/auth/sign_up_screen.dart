@@ -15,7 +15,7 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // But still same problem, let's fixed it
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: Stack(
         fit: StackFit.expand,
         children: [
@@ -41,7 +41,7 @@ class SignUpScreen extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        Text("Already have an account?"),
+                        const Text("Already have an account?"),
                         TextButton(
                           onPressed: () => Navigator.push(
                               context,
@@ -69,7 +69,7 @@ class SignUpScreen extends StatelessWidget {
                             _formKey.currentState!.save();
                           }
                         },
-                        child: Text("Sign Up"),
+                        child: const Text("Sign Up"),
                       ),
                     ),
                   ],
