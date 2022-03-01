@@ -3,7 +3,6 @@ import 'package:form_field_validator/form_field_validator.dart';
 
 import '../../../../constants.dart';
 
-
 class PatientRegistration extends StatefulWidget {
   PatientRegistration({
     Key? key,
@@ -25,7 +24,14 @@ class _PatientRegistrationState extends State<PatientRegistration> {
 
   // List of items in our dropdown menu
   final _items = [
-    'A+','A-','B+','B-', 'O+', 'O-','AB+', 'AB-',
+    'A+',
+    'A-',
+    'B+',
+    'B-',
+    'O+',
+    'O-',
+    'AB+',
+    'AB-',
   ];
 
   @override
@@ -37,7 +43,8 @@ class _PatientRegistrationState extends State<PatientRegistration> {
         children: [
           TextFieldName(text: "Patient name"),
           TextFormField(
-            decoration: InputDecoration(hintText: "Enter your first and last name"),
+            decoration:
+                InputDecoration(hintText: "Enter your first and last name"),
             validator: RequiredValidator(errorText: "Patient name is required"),
             // Let's save our username
             onSaved: (username) => _userName = username!,
@@ -46,59 +53,59 @@ class _PatientRegistrationState extends State<PatientRegistration> {
           // We will fixed the error soon
           // As you can see, it's a email field
           // But no @ on keyboard
-          Row(
-              children:[
-                const Text("Blood Group"),
-                const SizedBox(width: defaultPadding),
-                DropdownButton(
-                  // Initial Value
-                  value: _dropdownvalue,
-                  // Down Arrow Icon
-                  icon: const Icon(Icons.keyboard_arrow_down),
+          Row(children: [
+            const Text("Blood Group"),
+            const SizedBox(width: defaultPadding),
+            DropdownButton(
+              // Initial Value
+              value: _dropdownvalue,
+              // Down Arrow Icon
+              icon: const Icon(Icons.keyboard_arrow_down),
 
-                  // Array list of items
-                   items: _items.map((String items) {
-                   return DropdownMenuItem(
-                     value: items,
-                      child: Text(items),
-                    );
-                  }).toList(),
-                  // After selecting the desired option,it will
-                  // change button value to selected value
-                  onChanged: (String? newValue) {
+              // Array list of items
+              items: _items.map((String items) {
+                return DropdownMenuItem(
+                  value: items,
+                  child: Text(items),
+                );
+              }).toList(),
+              // After selecting the desired option,it will
+              // change button value to selected value
+              onChanged: (String? newValue) {
+                setState(() {
+                  _dropdownvalue = newValue!;
+                });
+              },
+            ),
+            Row(
+              children: [
+                Radio<String>(
+                  value: 'male',
+                  groupValue: _selectedGender,
+                  onChanged: (value) {
                     setState(() {
-                      _dropdownvalue = newValue!;
-                  });},
+                      _selectedGender = value!;
+                    });
+                  },
                 ),
-                Row(
-                  children: [ Radio<String>(
-                    value: 'male',
-                    groupValue: _selectedGender,
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedGender = value!;
-                      });
-                    },
-                  ),
-                    const Text('Male'),
-                  ],
-
+                const Text('Male'),
+              ],
+            ),
+            Row(
+              children: [
+                Radio<String>(
+                  value: 'female',
+                  groupValue: _selectedGender,
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedGender = value!;
+                    });
+                  },
                 ),
-                Row(
-                  children: [ Radio<String>(
-                    value: 'female',
-                    groupValue: _selectedGender,
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedGender = value!;
-                      });
-                    },
-                  ),
-                    const Text('Female'),
-                  ],
-
-                )
-              ]),
+                const Text('Female'),
+              ],
+            )
+          ]),
 
           const SizedBox(height: defaultPadding),
 
@@ -116,12 +123,10 @@ class _PatientRegistrationState extends State<PatientRegistration> {
           // Same for phone number
           TextFormField(
             keyboardType: TextInputType.phone,
-            decoration: InputDecoration(hintText: "+123487697"),
+            decoration: InputDecoration(hintText: "+91 0123456789"),
             validator: RequiredValidator(errorText: "Phone number is required"),
             onSaved: (phoneNumber) => _phoneNumber = phoneNumber!,
           ),
-
-
           const SizedBox(height: defaultPadding),
 
           TextFieldName(text: "Password"),
@@ -142,7 +147,9 @@ class _PatientRegistrationState extends State<PatientRegistration> {
           TextFormField(
             obscureText: true,
             decoration: InputDecoration(hintText: "*****"),
-            validator: (pass) => MatchValidator(errorText: "Password do not  match").validateMatch(pass!, _password),
+            validator: (pass) =>
+                MatchValidator(errorText: "Password do not  match")
+                    .validateMatch(pass!, _password),
           ),
 
           const SizedBox(height: defaultPadding),
