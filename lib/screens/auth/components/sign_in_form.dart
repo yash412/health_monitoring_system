@@ -4,7 +4,7 @@ import 'package:form_field_validator/form_field_validator.dart';
 import '../../../constants.dart';
 import 'sign_up_form.dart';
 
-class SignInForm extends StatelessWidget {
+class SignInForm extends StatefulWidget {
   SignInForm({
     Key? key,
     required this.formKey,
@@ -12,28 +12,65 @@ class SignInForm extends StatelessWidget {
 
   final GlobalKey formKey;
 
-  late String _email, _password;
+  @override
+  State<SignInForm> createState() => _SignInFormState();
+}
 
+class _SignInFormState extends State<SignInForm> {
+  late String _email, _password;
+  var items = ['Doctor', 'Patient', 'LAB'];
+  String dropdownvalue = 'Doctor';
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: formKey,
+      key: widget.formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextFieldName(text: "Email"),
+          const SizedBox(height: defaultPadding),
+          Row(
+            children: [
+
+              const Text("User Type  ",style: TextStyle(color:Color(0xFF35364F))),
+              const SizedBox(width: defaultPadding),
+              DropdownButton(
+                // Initial Value
+                value: dropdownvalue,
+
+                // Down Arrow Icon
+                icon: const Icon(Icons.keyboard_arrow_down),
+
+                // Array list of items
+                items: items.map((String items) {
+                  return DropdownMenuItem(
+                    value: items,
+                    child: Text(items,style: const TextStyle(color:Color(0xFF35364F))),
+                  );
+                }).toList(),
+                // After selecting the desired option,it will
+                // change button value to selected value
+                onChanged: (String? newValue) {
+                  setState(() {
+                    dropdownvalue = newValue!;
+                  });
+                },
+              ),
+            ],
+          ),
+          const SizedBox(height: defaultPadding),
+          const TextFieldName(text: "Email"),
           TextFormField(
             keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(hintText: "test@email.com"),
+            decoration: const InputDecoration(hintText: "test@email.com"),
             validator: EmailValidator(errorText: "Use a valid email!"),
             onSaved: (email) => _email = email!,
           ),
           const SizedBox(height: defaultPadding),
-          TextFieldName(text: "Password"),
+          const TextFieldName(text: "Password"),
           TextFormField(
             // We want to hide our password
             obscureText: true,
-            decoration: InputDecoration(hintText: "******"),
+            decoration: const InputDecoration(hintText: "******"),
             validator: passwordValidator,
             onSaved: (password) => _password = password!,
           ),

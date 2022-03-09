@@ -1,10 +1,8 @@
 import 'package:health_monitoring_system/constants.dart';
 import 'package:health_monitoring_system/screens/auth/choose_user.dart';
 import 'package:health_monitoring_system/screens/auth/sign_in_screen.dart';
-import 'package:health_monitoring_system/screens/auth/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -15,8 +13,7 @@ class WelcomeScreen extends StatelessWidget {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          SvgPicture.asset("assets/icons/splash_bg.svg",
-              fit: BoxFit.cover),
+          SvgPicture.asset("assets/icons/splash_bg.svg", fit: BoxFit.cover),
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
@@ -57,8 +54,8 @@ class WelcomeScreen extends StatelessWidget {
                         style: TextButton.styleFrom(
                           // backgroundColor: Color(0xFF6CD8D1),
                           elevation: 0,
-                            backgroundColor: Colors.cyan,
-                          shape: RoundedRectangleBorder(
+                          backgroundColor: Colors.cyan,
+                          shape: const RoundedRectangleBorder(
                             side: BorderSide(color: Color(0xFF6CD8D1)),
                           ),
                         ),

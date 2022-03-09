@@ -12,6 +12,8 @@ class SignUpScreen extends StatelessWidget {
   // It's time to validate the text field
   final _formKey = GlobalKey<FormState>();
 
+    int user = 1;
+  SignUpScreen(this.user, {Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     // But still same problem, let's fixed it
@@ -57,12 +59,9 @@ class SignUpScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: defaultPadding * 2),
-                    // SignUpForm(formKey: _formKey),
-<<<<<<< HEAD
-                       DoctorRegistration(formKey: _formKey),
-=======
-                    labRegristration(formKey: _formKey),
->>>>>>> b97fad4eced482ab0cdb5aaa696b6a955327c38f
+                    if (user == 0) PatientRegistration(formKey: _formKey),
+                    if (user == 1) DoctorRegistration(formKey: _formKey),
+                    if (user == 2) labRegristration(formKey: _formKey),
                     const SizedBox(height: defaultPadding * 2),
                     SizedBox(
                       width: double.infinity,

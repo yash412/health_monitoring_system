@@ -1,3 +1,4 @@
+import 'package:health_monitoring_system/screens/auth/choose_user.dart';
 import 'package:health_monitoring_system/screens/auth/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -5,8 +6,13 @@ import 'package:flutter_svg/svg.dart';
 import '../../constants.dart';
 import 'components/sign_in_form.dart';
 
-class SignInScreen extends StatelessWidget {
-  // It's time to validat the text field
+class SignInScreen extends StatefulWidget {
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+  // It's time to validate the text field
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -46,7 +52,7 @@ class SignInScreen extends StatelessWidget {
                           onPressed: () => Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => SignUpScreen(),
+                              builder: (context) => ChooseUser(),
                             ),
                           ),
                           child: Text(
