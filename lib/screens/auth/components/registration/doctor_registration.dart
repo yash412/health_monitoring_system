@@ -21,9 +21,6 @@ class _DoctorRegistrationState extends State<DoctorRegistration> {
 
   String _selectedGender = 'male';
 
-  String _dropdownvalue = 'A+';
-
-  // List of items in our dropdown menu
 
 
   @override

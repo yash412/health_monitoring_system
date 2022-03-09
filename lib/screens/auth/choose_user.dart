@@ -30,24 +30,26 @@ class ChooseUser extends StatelessWidget {
         const SizedBox(height: defaultPadding * 2),
         TextButton(
             onPressed: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => SignUpScreen())),
+                MaterialPageRoute(builder: (context) => SignUpScreen(1))),
             child: const Text('Doctor',
                 style: TextStyle(
                     fontSize: 25.5,
                     fontWeight: FontWeight.bold,
                     color: Colors.black54))),
         const SizedBox(height: defaultPadding * 2),
-        const TextButton(
-            onPressed: null,
-            child: Text('Patient',
+        TextButton(
+            onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => SignUpScreen(0))),
+            child: const Text('Patient',
                 style: TextStyle(
                     fontSize: 25.5,
                     fontWeight: FontWeight.bold,
                     color: Colors.black54))),
         const SizedBox(height: defaultPadding * 2),
-        const TextButton(
-            onPressed: null,
-            child: Text('Pathology LAB',
+        TextButton(
+            onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => SignUpScreen(2))),
+            child: const Text('Pathology LAB',
                 style: TextStyle(
                     fontSize: 25.5,
                     fontWeight: FontWeight.bold,
