@@ -1,9 +1,10 @@
 import 'package:health_monitoring_system/screens/auth/choose_user.dart';
-import 'package:health_monitoring_system/screens/auth/sign_up_screen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../constants.dart';
+import '../profile/doctor.dart';
 import 'components/sign_in_form.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -47,7 +48,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                     Row(
                       children: [
-                        Text("Don't have an account?"),
+                        const Text("Don't have an account?"),
                         TextButton(
                           onPressed: () => Navigator.push(
                             context,
@@ -55,7 +56,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               builder: (context) => ChooseUser(),
                             ),
                           ),
-                          child: Text(
+                          child: const Text(
                             "Sign Up!",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
@@ -74,9 +75,14 @@ class _SignInScreenState extends State<SignInScreen> {
                             // It saved our inputs
                             _formKey.currentState!.save();
                             //  Sign in also done
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DoctorHomeScreen("me"),
+                                ));
                           }
                         },
-                        child: Text("Sign In"),
+                        child: const Text("Sign In"),
                       ),
                     ),
                   ],

@@ -19,7 +19,7 @@ class SignInForm extends StatefulWidget {
 class _SignInFormState extends State<SignInForm> {
   late String _email, _password;
   var items = ['Doctor', 'Patient', 'LAB'];
-  String dropdownvalue = 'Doctor';
+  String dropDownValue = 'Doctor';
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -30,12 +30,12 @@ class _SignInFormState extends State<SignInForm> {
           const SizedBox(height: defaultPadding),
           Row(
             children: [
-
-              const Text("User Type  ",style: TextStyle(color:Color(0xFF35364F))),
+              const Text("User Type  ",
+                  style: TextStyle(color: Color(0xFF35364F))),
               const SizedBox(width: defaultPadding),
               DropdownButton(
                 // Initial Value
-                value: dropdownvalue,
+                value: dropDownValue,
 
                 // Down Arrow Icon
                 icon: const Icon(Icons.keyboard_arrow_down),
@@ -44,14 +44,15 @@ class _SignInFormState extends State<SignInForm> {
                 items: items.map((String items) {
                   return DropdownMenuItem(
                     value: items,
-                    child: Text(items,style: const TextStyle(color:Color(0xFF35364F))),
+                    child: Text(items,
+                        style: const TextStyle(color: Color(0xFF35364F))),
                   );
                 }).toList(),
                 // After selecting the desired option,it will
                 // change button value to selected value
                 onChanged: (String? newValue) {
                   setState(() {
-                    dropdownvalue = newValue!;
+                    dropDownValue = newValue!;
                   });
                 },
               ),
