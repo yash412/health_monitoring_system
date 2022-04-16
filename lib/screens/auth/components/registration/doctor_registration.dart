@@ -1,27 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-
+import '../../../../db/database.dart';
+import '../../../../models/doctorModel.dart';
 import '../../../../constants.dart';
-
 
 class DoctorRegistration extends StatefulWidget {
   DoctorRegistration({
     Key? key,
     required this.formKey,
+    required this.doctors,
   }) : super(key: key);
 
   final GlobalKey formKey;
-
+  final Doctors doctors;
   @override
   State<DoctorRegistration> createState() => _DoctorRegistrationState();
 }
 
 class _DoctorRegistrationState extends State<DoctorRegistration> {
-  late String _doctorName, _email, _password, _phoneNumber;
-
-  String _selectedGender = 'male';
-
-
+  Database db = Database();
+  String _gender = 'male';
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +30,14 @@ class _DoctorRegistrationState extends State<DoctorRegistration> {
         children: [
           const TextFieldName(text: "Doctor name"),
           TextFormField(
-            decoration: const InputDecoration(hintText: "Enter your first and last name"),
+            decoration: const InputDecoration(
+                hintText: "Enter your first and last name"),
             validator: RequiredValidator(errorText: "Patient name is required"),
             // Let's save our username
-            onSaved: (username) => _doctorName = username!,
+
+            onSaved: (username) {
+              widget.doctors.drName = username!;
+            },
           ),
 
           const SizedBox(height: defaultPadding),
@@ -45,41 +47,44 @@ class _DoctorRegistrationState extends State<DoctorRegistration> {
             decoration: const InputDecoration(hintText: "Clinic Address"),
             validator: RequiredValidator(errorText: "Clinic Address required"),
             // Let's save our username
-            onSaved: (username) => _doctorName = username!,
+
+            onSaved: (address) => widget.doctors.address = address!,
           ),
           const SizedBox(height: defaultPadding),
           // We will fixed the error soon
           // As you can see, it's a email field
           // But no @ on keyboard
 
-      Row(children: [Row(
-                  children: [ Radio<String>(
-                    value: 'male',
-                    groupValue: _selectedGender,
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedGender = value!;
-                      });
-                    },
-                  ),
-                    const Text('Male'),
-                  ],
-
+          Row(children: [
+            Row(
+              children: [
+                Radio<String>(
+                  value: 'male',
+                  groupValue: widget.doctors.gender,
+                  onChanged: (value) {
+                    setState(() {
+                      widget.doctors.gender = value!;
+                    });
+                  },
                 ),
-                Row(
-                  children: [ Radio<String>(
-                    value: 'female',
-                    groupValue: _selectedGender,
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedGender = value!;
-                      });
-                    },
-                  ),
-                    const Text('Female'),
-                  ],
-
-                ),]),
+                const Text('Male'),
+              ],
+            ),
+            Row(
+              children: [
+                Radio<String>(
+                  value: 'female',
+                  groupValue: widget.doctors.gender,
+                  onChanged: (value) {
+                    setState(() {
+                      widget.doctors.gender = value!;
+                    });
+                  },
+                ),
+                const Text('Female'),
+              ],
+            ),
+          ]),
 
           const SizedBox(height: defaultPadding),
 
@@ -88,7 +93,8 @@ class _DoctorRegistrationState extends State<DoctorRegistration> {
             keyboardType: TextInputType.number,
             // decoration: InputDecoration(hintText: "test@email.com"),
             // validator: EmailValidator(errorText: "Use a valid email!"),
-            // onSaved: (email) => _email = email!,
+
+            onSaved: (uID) => widget.doctors.aadharNo = uID!,
           ),
 
           const SizedBox(height: defaultPadding),
@@ -97,11 +103,10 @@ class _DoctorRegistrationState extends State<DoctorRegistration> {
           // Same for phone number
           TextFormField(
             keyboardType: TextInputType.phone,
-            decoration: InputDecoration(hintText: "+123487697"),
+            decoration: const InputDecoration(hintText: "+123487697"),
             validator: RequiredValidator(errorText: "Phone number is required"),
-            onSaved: (phoneNumber) => _phoneNumber = phoneNumber!,
+            onSaved: (phoneNumber) => widget.doctors.contNo = phoneNumber!,
           ),
-
 
           const SizedBox(height: defaultPadding),
 
@@ -111,29 +116,22 @@ class _DoctorRegistrationState extends State<DoctorRegistration> {
             obscureText: true,
             decoration: const InputDecoration(hintText: "******"),
             validator: passwordValidator,
-            onSaved: (password) => _password = password!,
+
+            onSaved: (password) => widget.doctors.password = password!,
             // We also need to validate our password
             // Now if we type anything it adds that to our password
-            onChanged: (pass) => _password = pass,
+            onChanged: (pass) => widget.doctors.password = pass,
           ),
 
           const SizedBox(height: defaultPadding),
 
-          TextFieldName(text: "Confirm Password"),
+          const TextFieldName(text: "Confirm Password"),
           TextFormField(
             obscureText: true,
-            decoration: InputDecoration(hintText: "*****"),
-            validator: (pass) => MatchValidator(errorText: "Password do not  match").validateMatch(pass!, _password),
-          ),
-
-          const SizedBox(height: defaultPadding),
-
-          const TextFieldName(text: "Address"),
-          TextFormField(
-            keyboardType: TextInputType.streetAddress,
-            // decoration: InputDecoration(hintText: "test@email.com"),
-            validator: EmailValidator(errorText: "Enter your Address"),
-            // onSaved: (email) => _email = email!,
+            decoration: const InputDecoration(hintText: "*****"),
+            validator: (pass) =>
+                MatchValidator(errorText: "Password do not  match")
+                    .validateMatch(pass!, widget.doctors.password),
           ),
         ],
       ),
@@ -155,7 +153,8 @@ class TextFieldName extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: defaultPadding / 3),
       child: Text(
         text,
-        style: const TextStyle(fontWeight: FontWeight.w600, color: Colors.black54),
+        style:
+            const TextStyle(fontWeight: FontWeight.w600, color: Colors.black54),
       ),
     );
   }
