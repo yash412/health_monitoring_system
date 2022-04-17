@@ -7,6 +7,7 @@ import '../../constants.dart';
 import '../profile/doctor.dart';
 import '../profile/patient.dart';
 import 'components/sign_in_form.dart';
+import '../auth/after_login.dart';
 
 class SignInScreen extends StatefulWidget {
   @override
@@ -79,7 +80,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => PatientHomeScreen("me"),
+                                  builder: (context) => AfterUser(),
                                 ));
                           }
                         },
