@@ -1,6 +1,7 @@
-
 import 'package:health_monitoring_system/constants.dart';
 import 'package:health_monitoring_system/models/doctorModel.dart';
+import 'package:health_monitoring_system/models/labModel.dart';
+import 'package:health_monitoring_system/models/paitentModel.dart';
 import 'package:health_monitoring_system/screens/auth/components/registration/doctor_registration.dart';
 import 'package:health_monitoring_system/screens/auth/sign_in_screen.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,10 @@ import 'package:health_monitoring_system/db/database.dart';
 
 class SignUpScreen extends StatelessWidget {
   // It's time to validate the text field
+  final Database _db = Database();
   final Doctors _doctors = Doctors();
+  final Patients _patients = Patients();
+  final Labs _lab = Labs();
   final _formKey = GlobalKey<FormState>();
   int user = 1;
   SignUpScreen(this.user, {Key? key}) : super(key: key);
@@ -61,9 +65,11 @@ class SignUpScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: defaultPadding * 2),
-                    if (user == 0) PatientRegistration(formKey: _formKey),
-                    if (user == 1) DoctorRegistration(formKey: _formKey, doctors: _doctors),
-                    if (user == 2) labRegristration(formKey: _formKey),
+                    if (user == 0)
+                      PatientRegistration(formKey: _formKey, patients: _patients),
+                    if (user == 1)
+                      DoctorRegistration(formKey: _formKey, doctors: _doctors),
+                    if (user == 2) labRegristration(formKey: _formKey,labs: _lab,),
                     const SizedBox(height: defaultPadding * 2),
                     SizedBox(
                       width: double.infinity,
@@ -73,7 +79,15 @@ class SignUpScreen extends StatelessWidget {
                             // Sign up form is done
                             // It saved our inputs
                             _formKey.currentState!.save();
-                            Database().addDoctor(_doctors);
+                            if (user == 0) {
+                              _db.addPatient(_patients);
+                            }
+                            if (user == 1) {
+                              _db.addDoctor(_doctors);
+                            }
+                            if(user == 2){
+                              _db.addLab(_lab);
+                            }
                           }
                         },
                         child: const Text("Sign Up"),

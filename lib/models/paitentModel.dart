@@ -1,22 +1,22 @@
 class Patients {
-  String fName, mName, lName;
-  DateTime birthDate;
-  String address;
-  String aadharNo;
-  String contNo;
-  String gender;
-  String bloodGr;
+  late String name;
+  late String  birthDate;
+  late String address;
+  late String aadharNo;
+  late String contNo;
+  String gender = 'male';
+  String bloodGr = 'A+';
+  late String password;
 
-  Patients(this.fName, this.mName, this.lName, this.gender, this.bloodGr,
-      this.aadharNo, this.birthDate, this.contNo, this.address);
+  // Patients(this.name, this.gender, this.bloodGr, this.aadharNo, this.birthDate,
+  //     this.contNo, this.address, this.password);
 
   List<Map<String, dynamic>> getMap() {
     List<Map<String, dynamic>> mapList = [];
-    mapList.add({'FName': fName});
-    mapList.add({'MName': mName});
-    mapList.add({'LName': lName});
+    mapList.add({'Name': name});
     mapList.add({'Gender': gender});
     mapList.add({'Blood': bloodGr});
+    mapList.add({'Password': password});
     mapList.add({'Birth': birthDate});
     mapList.add({'Address': address});
     mapList.add({'Aadhar': aadharNo});

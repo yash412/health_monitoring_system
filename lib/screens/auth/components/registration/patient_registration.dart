@@ -1,26 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-
+import '../../../../models/paitentModel.dart';
 import '../../../../constants.dart';
 
 class PatientRegistration extends StatefulWidget {
   PatientRegistration({
     Key? key,
-    required this.formKey,
+    required this.formKey,required this.patients
   }) : super(key: key);
 
   final GlobalKey formKey;
+  final Patients patients;
 
   @override
   State<PatientRegistration> createState() => _PatientRegistrationState();
 }
 
 class _PatientRegistrationState extends State<PatientRegistration> {
-  late String _userName, _email, _password, _phoneNumber;
 
-  String _selectedGender = 'male';
-
-  String _dropdownvalue = 'A+';
 
   // List of items in our dropdown menu
   final _items = [
@@ -41,13 +38,13 @@ class _PatientRegistrationState extends State<PatientRegistration> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextFieldName(text: "Patient name"),
+          const TextFieldName(text: "Patient name"),
           TextFormField(
-            decoration:
-                InputDecoration(hintText: "Enter your first and last name"),
+            decoration: const InputDecoration(
+                hintText: "Enter your first and last name"),
             validator: RequiredValidator(errorText: "Patient name is required"),
             // Let's save our username
-            onSaved: (username) => _userName = username!,
+            onSaved: (username) => widget.patients.name = username!,
           ),
           const SizedBox(height: defaultPadding),
           // We will fixed the error soon
@@ -58,7 +55,7 @@ class _PatientRegistrationState extends State<PatientRegistration> {
             const SizedBox(width: defaultPadding),
             DropdownButton(
               // Initial Value
-              value: _dropdownvalue,
+              value: widget.patients.bloodGr,
               // Down Arrow Icon
               icon: const Icon(Icons.keyboard_arrow_down),
 
@@ -73,7 +70,7 @@ class _PatientRegistrationState extends State<PatientRegistration> {
               // change button value to selected value
               onChanged: (String? newValue) {
                 setState(() {
-                  _dropdownvalue = newValue!;
+                  widget.patients.bloodGr = newValue!;
                 });
               },
             ),
@@ -81,10 +78,10 @@ class _PatientRegistrationState extends State<PatientRegistration> {
               children: [
                 Radio<String>(
                   value: 'male',
-                  groupValue: _selectedGender,
+                  groupValue: widget.patients.gender,
                   onChanged: (value) {
                     setState(() {
-                      _selectedGender = value!;
+                      widget.patients.gender = value!;
                     });
                   },
                 ),
@@ -95,10 +92,10 @@ class _PatientRegistrationState extends State<PatientRegistration> {
               children: [
                 Radio<String>(
                   value: 'female',
-                  groupValue: _selectedGender,
+                  groupValue: widget.patients.gender,
                   onChanged: (value) {
                     setState(() {
-                      _selectedGender = value!;
+                      widget.patients.gender = value!;
                     });
                   },
                 ),
@@ -106,50 +103,64 @@ class _PatientRegistrationState extends State<PatientRegistration> {
               ],
             )
           ]),
+          const SizedBox(height: defaultPadding),
+
+          const TextFieldName(text: "Birth Date"),
+          TextFormField(
+              keyboardType: TextInputType.datetime,
+              // decoration: InputDecoration(hintText: "test@email.com"),
+              // onTap: ()async{
+              //    date = await showDatePicker(
+              //       context: context,
+              //       initialDate: DateTime.now(),
+              //       firstDate: DateTime(1900),
+              //       lastDate: DateTime(2100));
+              // },
+              onSaved: (bod) => widget.patients.birthDate = bod!),
 
           const SizedBox(height: defaultPadding),
 
-          TextFieldName(text: "Aadhar"),
+          const TextFieldName(text: "Aadhar"),
           TextFormField(
             keyboardType: TextInputType.number,
             // decoration: InputDecoration(hintText: "test@email.com"),
-            validator: EmailValidator(errorText: "Use a valid email!"),
-            // onSaved: (email) => _email = email!,
+            // validator: EmailValidator(errorText: "Use a valid email!"),
+            onSaved: (uID) => widget.patients.aadharNo = uID!,
           ),
 
           const SizedBox(height: defaultPadding),
 
-          TextFieldName(text: "Phone"),
+          const TextFieldName(text: "Phone"),
           // Same for phone number
           TextFormField(
             keyboardType: TextInputType.phone,
-            decoration: InputDecoration(hintText: "+91 0123456789"),
+            decoration: const InputDecoration(hintText: "+91 0123456789"),
             validator: RequiredValidator(errorText: "Phone number is required"),
-            onSaved: (phoneNumber) => _phoneNumber = phoneNumber!,
+            onSaved: (phoneNumber) => widget.patients.contNo = phoneNumber!,
           ),
           const SizedBox(height: defaultPadding),
 
-          TextFieldName(text: "Password"),
+          const TextFieldName(text: "Password"),
           TextFormField(
             // We want to hide our password
             obscureText: true,
-            decoration: InputDecoration(hintText: "******"),
+            decoration: const InputDecoration(hintText: "******"),
             validator: passwordValidator,
-            onSaved: (password) => _password = password!,
+            onSaved: (password) => widget.patients.password = password!,
             // We also need to validate our password
             // Now if we type anything it adds that to our password
-            onChanged: (pass) => _password = pass,
+            onChanged: (pass) => widget.patients.password = pass,
           ),
 
           const SizedBox(height: defaultPadding),
 
-          TextFieldName(text: "Confirm Password"),
+          const TextFieldName(text: "Confirm Password"),
           TextFormField(
             obscureText: true,
-            decoration: InputDecoration(hintText: "*****"),
+            decoration: const InputDecoration(hintText: "*****"),
             validator: (pass) =>
                 MatchValidator(errorText: "Password do not  match")
-                    .validateMatch(pass!, _password),
+                    .validateMatch(pass!, widget.patients.password),
           ),
 
           const SizedBox(height: defaultPadding),
@@ -158,8 +169,8 @@ class _PatientRegistrationState extends State<PatientRegistration> {
           TextFormField(
             keyboardType: TextInputType.streetAddress,
             // decoration: InputDecoration(hintText: "test@email.com"),
-            validator: EmailValidator(errorText: "Enter your Address"),
-            // onSaved: (email) => _email = email!,
+            // validator: EmailValidator(errorText: "Enter your Address"),
+            onSaved: (address) => widget.patients.address = address!,
           ),
         ],
       ),
@@ -181,7 +192,7 @@ class TextFieldName extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: defaultPadding / 3),
       child: Text(
         text,
-        style: TextStyle(fontWeight: FontWeight.w600, color: Colors.black54),
+        style: const TextStyle(fontWeight: FontWeight.w600, color: Colors.black54),
       ),
     );
   }
