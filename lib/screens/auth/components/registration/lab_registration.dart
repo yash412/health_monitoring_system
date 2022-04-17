@@ -1,85 +1,88 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:health_monitoring_system/models/labModel.dart';
 
 import '../../../../constants.dart';
 import '../../../constants.dart';
 
-class labRegristration extends StatelessWidget {
+class labRegristration extends StatefulWidget {
   labRegristration({
     Key? key,
-    required this.formKey,
+    required this.formKey, required this.labs,
   }) : super(key: key);
 
   final GlobalKey formKey;
+  final Labs labs;
 
-  late String _userName, _email, _password, _phoneNumber;
-  final TextEditingController _pass = TextEditingController();
-  final TextEditingController _confirmPass = TextEditingController();
+  @override
+  State<labRegristration> createState() => _labRegristrationState();
+}
 
+class _labRegristrationState extends State<labRegristration> {
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: formKey,
+      key: widget.formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextFieldName(text: "Lab Name"),
+          const TextFieldName(text: "Lab Name"),
           TextFormField(
-            decoration: InputDecoration(hintText: "Enter Lab Name"),
+            decoration: const InputDecoration(hintText: "Enter Lab Name"),
             validator: RequiredValidator(errorText: "Lab name is required"),
             // Let's save our username
-            onSaved: (username) => _userName = username!,
+            onSaved: (labname) => widget.labs.labName = labname!,
           ),
           const SizedBox(height: defaultPadding),
 
-          TextFieldName(text: "User Name"),
+          const TextFieldName(text: "User Name"),
           TextFormField(
-            decoration: InputDecoration(hintText: "Enter User Name"),
+            decoration: const InputDecoration(hintText: "Enter User Name"),
             validator: RequiredValidator(errorText: "User name is required"),
             // Let's save our username
-            onSaved: (username) => _userName = username!,
+            onSaved: (username) => widget.labs.userName = username!,
           ),
           const SizedBox(height: defaultPadding),
 
-          TextFieldName(text: "Address"),
+          const TextFieldName(text: "Address"),
           TextFormField(
-            decoration: InputDecoration(hintText: "Enter Address"),
+            decoration: const InputDecoration(hintText: "Enter Address"),
             validator: RequiredValidator(errorText: "User name is required"),
             // Let's save our username
-            onSaved: (username) => _userName = username!,
+            onSaved: (username) => widget.labs.address = username!,
           ),
           const SizedBox(height: defaultPadding),
 
-          TextFieldName(text: "Phone"),
+          const TextFieldName(text: "Phone"),
           // Same for phone number
           TextFormField(
             keyboardType: TextInputType.phone,
-            decoration: InputDecoration(hintText: "+91 0123456789"),
+            decoration: const InputDecoration(hintText: "+91 0123456789"),
             validator: RequiredValidator(errorText: "Phone number is required"),
-            onSaved: (phoneNumber) => _phoneNumber = phoneNumber!,
+            onSaved: (phoneNumber) => widget.labs.contNo = phoneNumber!,
           ),
           const SizedBox(height: defaultPadding),
 
-          TextFieldName(text: "Password"),
+          const TextFieldName(text: "Password"),
           TextFormField(
             // We want to hide our password
             obscureText: true,
-            decoration: InputDecoration(hintText: "******"),
+            decoration: const InputDecoration(hintText: "******"),
             validator: passwordValidator,
-            onSaved: (password) => _password = password!,
+            onSaved: (password) => widget.labs.password = password!,
             // We also need to validate our password
             // Now if we type anything it adds that to our password
-            onChanged: (pass) => _password = pass,
+            onChanged: (pass) => widget.labs.password = pass,
           ),
           const SizedBox(height: defaultPadding),
 
-          TextFieldName(text: "Confirm Password"),
+          const TextFieldName(text: "Confirm Password"),
           TextFormField(
             obscureText: true,
-            decoration: InputDecoration(hintText: "******"),
+            decoration: const InputDecoration(hintText: "******"),
             validator: (pass) =>
                 MatchValidator(errorText: "Password do not  match")
-                    .validateMatch(pass!, _password),
+                    .validateMatch(pass!, widget.labs.password),
           ),
         ],
       ),
@@ -110,7 +113,7 @@ class TextFieldName extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: defaultPadding / 3),
       child: Text(
         text,
-        style: TextStyle(fontWeight: FontWeight.w600, color: Colors.black54),
+        style: const TextStyle(fontWeight: FontWeight.w600, color: Colors.black54),
       ),
     );
   }

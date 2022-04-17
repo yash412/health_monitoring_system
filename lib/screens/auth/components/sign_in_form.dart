@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:health_monitoring_system/screens/auth/components/registration/doctor_registration.dart';
 
 import '../../../constants.dart';
 import 'sign_up_form.dart';
