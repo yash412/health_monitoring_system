@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../constants.dart';
 import '../profile/doctor.dart';
+import '../profile/patient.dart';
 import 'components/sign_in_form.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -32,7 +33,7 @@ class _SignInScreenState extends State<SignInScreen> {
           ),
           Padding(
             padding:
-                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
+            EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
             child: SafeArea(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
@@ -78,7 +79,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => DoctorHomeScreen("me"),
+                                  builder: (context) => PatientHomeScreen("me"),
                                 ));
                           }
                         },
