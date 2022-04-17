@@ -68,7 +68,7 @@ class PatientHomeScreen extends StatelessWidget {
                   ),
                   child: const Center(
                       child: Text(
-                        'Setting',
+                        'Profile',
                         style: TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 17,
