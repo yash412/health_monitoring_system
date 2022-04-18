@@ -8,7 +8,8 @@ import '../../../constants.dart';
 class labRegristration extends StatefulWidget {
   labRegristration({
     Key? key,
-    required this.formKey, required this.labs,
+    required this.formKey,
+    required this.labs,
   }) : super(key: key);
 
   final GlobalKey formKey;
@@ -58,7 +59,15 @@ class _labRegristrationState extends State<labRegristration> {
           TextFormField(
             keyboardType: TextInputType.phone,
             decoration: const InputDecoration(hintText: "+91 0123456789"),
-            validator: RequiredValidator(errorText: "Phone number is required"),
+            validator: (String? value) {
+              Pattern pattern = r'^(?:[+0]9)?[0-9]{10}$';
+              RegExp regex = RegExp(pattern.toString());
+              if (!regex.hasMatch(value!)) {
+                return 'Enter Valid mobile number';
+              } else {
+                return null;
+              }
+            },
             onSaved: (phoneNumber) => widget.labs.contNo = phoneNumber!,
           ),
           const SizedBox(height: defaultPadding),
@@ -113,7 +122,8 @@ class TextFieldName extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: defaultPadding / 3),
       child: Text(
         text,
-        style: const TextStyle(fontWeight: FontWeight.w600, color: Colors.black54),
+        style:
+            const TextStyle(fontWeight: FontWeight.w600, color: Colors.black54),
       ),
     );
   }

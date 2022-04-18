@@ -4,10 +4,8 @@ import '../../../../models/paitentModel.dart';
 import '../../../../constants.dart';
 
 class PatientRegistration extends StatefulWidget {
-  PatientRegistration({
-    Key? key,
-    required this.formKey,required this.patients
-  }) : super(key: key);
+  PatientRegistration({Key? key, required this.formKey, required this.patients})
+      : super(key: key);
 
   final GlobalKey formKey;
   final Patients patients;
@@ -17,8 +15,6 @@ class PatientRegistration extends StatefulWidget {
 }
 
 class _PatientRegistrationState extends State<PatientRegistration> {
-
-
   // List of items in our dropdown menu
   final _items = [
     'A+',
@@ -135,7 +131,15 @@ class _PatientRegistrationState extends State<PatientRegistration> {
           TextFormField(
             keyboardType: TextInputType.phone,
             decoration: const InputDecoration(hintText: "+91 0123456789"),
-            validator: RequiredValidator(errorText: "Phone number is required"),
+            validator: (String? value) {
+              Pattern pattern = r'^(?:[+0]9)?[0-9]{10}$';
+              RegExp regex = RegExp(pattern.toString());
+              if (!regex.hasMatch(value!)) {
+                return 'Enter Valid mobile number';
+              } else {
+                return null;
+              }
+            },
             onSaved: (phoneNumber) => widget.patients.contNo = phoneNumber!,
           ),
           const SizedBox(height: defaultPadding),
@@ -192,7 +196,8 @@ class TextFieldName extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: defaultPadding / 3),
       child: Text(
         text,
-        style: const TextStyle(fontWeight: FontWeight.w600, color: Colors.black54),
+        style:
+            const TextStyle(fontWeight: FontWeight.w600, color: Colors.black54),
       ),
     );
   }
