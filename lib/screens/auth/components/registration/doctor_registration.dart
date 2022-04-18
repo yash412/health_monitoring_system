@@ -104,7 +104,15 @@ class _DoctorRegistrationState extends State<DoctorRegistration> {
           TextFormField(
             keyboardType: TextInputType.phone,
             decoration: const InputDecoration(hintText: "+123487697"),
-            validator: RequiredValidator(errorText: "Phone number is required"),
+            validator: (String? value) {
+              Pattern pattern = r'^(?:[+0]9)?[0-9]{10}$';
+              RegExp regex = RegExp(pattern.toString());
+              if (!regex.hasMatch(value!)) {
+                return 'Enter Valid mobile number';
+              } else {
+                return null;
+              }
+            },
             onSaved: (phoneNumber) => widget.doctors.contNo = phoneNumber!,
           ),
 

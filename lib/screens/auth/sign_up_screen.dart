@@ -18,8 +18,13 @@ class SignUpScreen extends StatelessWidget {
   final Patients _patients = Patients();
   final Labs _lab = Labs();
   final _formKey = GlobalKey<FormState>();
+
+
   int user = 1;
+
   SignUpScreen(this.user, {Key? key}) : super(key: key);
+
+
   @override
   Widget build(BuildContext context) {
     // But still same problem, let's fixed it
@@ -69,7 +74,9 @@ class SignUpScreen extends StatelessWidget {
                       PatientRegistration(formKey: _formKey, patients: _patients),
                     if (user == 1)
                       DoctorRegistration(formKey: _formKey, doctors: _doctors),
+
                     if (user == 2) labRegristration(formKey: _formKey,labs: _lab,),
+
                     const SizedBox(height: defaultPadding * 2),
                     SizedBox(
                       width: double.infinity,

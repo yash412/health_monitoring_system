@@ -5,6 +5,8 @@ import 'package:health_monitoring_system/models/labModel.dart';
 
 class Database {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+
   CollectionReference doctorCollection =
       FirebaseFirestore.instance.collection('doctor');
   CollectionReference patientCollection =
