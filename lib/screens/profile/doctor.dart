@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../constants.dart';
+import '../addPatientDetails.dart';
 
 class DoctorHomeScreen extends StatelessWidget {
   String user = "Name";
@@ -25,7 +26,7 @@ class DoctorHomeScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(
                 horizontal: defaultPadding, vertical: defaultPadding),
             child: SafeArea(
-              child: myProfile(),
+              child: myProfile(context),
             ),
           )
         ],
@@ -33,7 +34,7 @@ class DoctorHomeScreen extends StatelessWidget {
     );
   }
 
-  Widget myProfile() {
+  Widget myProfile(BuildContext buildContext) {
     return Row(
       children: [
         Container(
@@ -57,19 +58,19 @@ class DoctorHomeScreen extends StatelessWidget {
             width: 180,
             height: 180,
             padding: const EdgeInsets.all(20.0),
-            child: Card(
+            // width: 200,
+            // height: 200,
+            // padding: const EdgeInsets.all(20.0),
+            child: GestureDetector(child : Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15.0),
+
               ),
-              child: const Center(
-                  child: Text(
-                'Search Patient',
-                style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 17,
-                    fontStyle: FontStyle.normal),
-              )),
-            )),
+              child:const Center(child: Text('Add Prescription')),
+
+            ),onTap:(){
+              Navigator.push(buildContext,MaterialPageRoute(builder: (context) => AddPatientDetails(user)));
+            } ,)),
       ],
     );
   }
