@@ -59,7 +59,7 @@ class WelcomeScreen extends StatelessWidget {
                         onPressed: () => Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => LoginScreen()//SignInScreen(),
+                              builder: (context) => SignInScreen(),//LoginScreen()
                             )),
                         style: TextButton.styleFrom(
 

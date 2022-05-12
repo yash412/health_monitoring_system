@@ -7,8 +7,8 @@ import '../../../constants.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class UploadDocument extends StatefulWidget {
-  final  db ;
-  UploadDocument( this.db, {Key? key}) : super(key: key);
+  final db;
+  UploadDocument(this.db, {Key? key}) : super(key: key);
   // List<Map<String , dynamic>> urls = [];
 
   @override
@@ -19,7 +19,8 @@ class _UploadDocumentState extends State<UploadDocument> {
   /// Variables
   File? imageFile;
 
-  List<Map<String , dynamic>> urls = [];
+  List<Map<String, dynamic>> urls = [];
+
   /// Widget
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,7 @@ class _UploadDocumentState extends State<UploadDocument> {
             padding: const EdgeInsets.symmetric(
                 horizontal: defaultPadding, vertical: defaultPadding),
             child: SafeArea(
-              child: upload(widget.db),
+              child: SingleChildScrollView(child: upload(widget.db)),
             ),
           )
         ],
@@ -72,21 +73,28 @@ class _UploadDocumentState extends State<UploadDocument> {
                       },
                       child: const Text("PICK FROM CAMERA"),
                     ),
-                    RaisedButton(
-                      color: Colors.lightGreenAccent,
-                      onPressed: () {
-                        _uploadInDatabase();
-                      },
-                      child: const Text("Upload"),
-                    )
                   ],
                 ),
               )
-            : Container(
-                child: Image.file(
-                  imageFile!,
-                  fit: BoxFit.cover,
-                ),
+            : Column(
+                children: [
+                  Container(
+                    height: 700,
+                    width: 900,
+                    child: Image.file(
+                      imageFile!,
+                      height: 600,
+                      width: 900,
+                    ),
+                  ),
+                  RaisedButton(
+                    color: Colors.lightGreenAccent,
+                    onPressed: () {
+                      _uploadInDatabase();
+                    },
+                    child: const Text("Upload"),
+                  )
+                ],
               ));
   }
 
@@ -108,7 +116,6 @@ class _UploadDocumentState extends State<UploadDocument> {
   _getFromCamera() async {
     PickedFile? pickedFile = await ImagePicker().getImage(
       source: ImageSource.camera,
-
     );
     if (pickedFile != null) {
       setState(() {
@@ -121,15 +128,15 @@ class _UploadDocumentState extends State<UploadDocument> {
     final _storage = FirebaseStorage.instance;
     final _db = FirebaseFirestore.instance;
     if (imageFile != null) {
-     var snapshot = await _storage
+      var snapshot = await _storage
           .ref()
-          .child('userReportsHistory/imagename')
+          .child('userReportsHistory/imageName')
           .putFile(imageFile!);
-     var downloadUrl = await snapshot.ref.getDownloadURL();
-     setState(() {
-       urls.add({"imageName": 'name', 'url': downloadUrl} );
-       _db.collection('patient').doc('a4USOOrGWP5f8ss6d1h6').update(urls[0]);
-     });
+      var downloadUrl = await snapshot.ref.getDownloadURL();
+      setState(() {
+        urls.add({"imageName": 'name', 'url': downloadUrl});
+        _db.collection('patient').doc('a4USOOrGWP5f8ss6d1h6').update({'history':urls});
+      });
     }
   }
 }
