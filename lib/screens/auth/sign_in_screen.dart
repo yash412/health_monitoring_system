@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../constants.dart';
-import '../profile/doctor.dart';
-import '../profile/patient.dart';
+import '../profile/doctorProfile/doctor.dart';
+import '../profile/patientProfile/patient.dart';
 import 'components/sign_in_form.dart';
 import '../auth/after_login.dart';
 

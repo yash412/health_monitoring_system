@@ -1,12 +1,11 @@
 import 'package:health_monitoring_system/screens/welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'constants.dart';
 
 Future<void >main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+
   runApp(MyApp());
 }
 

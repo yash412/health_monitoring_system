@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../constants.dart';
+import '../../../constants.dart';
 
-class LabHomeScreen extends StatelessWidget {
+class DoctorHomeScreen extends StatelessWidget {
   String user = "Name";
 
-  LabHomeScreen(this.user, {Key? key}) : super(key: key);
+  DoctorHomeScreen(this.user, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,12 +46,12 @@ class LabHomeScreen extends StatelessWidget {
               ),
               child: const Center(
                   child: Text(
-                    'Profile',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 17,
-                        fontStyle: FontStyle.normal),
-                  )),
+                'Profile',
+                style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 17,
+                    fontStyle: FontStyle.normal),
+              )),
             )),
         Container(
             width: 180,
@@ -63,12 +63,12 @@ class LabHomeScreen extends StatelessWidget {
               ),
               child: const Center(
                   child: Text(
-                    'Search Patient',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 17,
-                        fontStyle: FontStyle.normal),
-                  )),
+                'Search Patient',
+                style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 17,
+                    fontStyle: FontStyle.normal),
+              )),
             )),
       ],
     );
