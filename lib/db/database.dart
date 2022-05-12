@@ -65,7 +65,7 @@ class Database {
           'Contact': patients.contNo,
           'Address': patients.address,
           'Password': patients.password,
-          'his_reports':FieldValue.arrayUnion(patients.histories)
+          // 'his_reports':FieldValue.arrayUnion(patients.histories)
         })
         .then((value) => print('User added 12'))
         .catchError((error) => print("ERROR Failed" + error));

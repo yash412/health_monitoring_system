@@ -69,8 +69,8 @@ class _SignInScreenState extends State<SignInScreen> {
                         ],
                       ),
                       const SizedBox(height: defaultPadding * 2),
-                      // SignInForm(formKey: _formKey),
-                     Container(child: const LoginScreen()),
+                      SignInForm(formKey: _formKey),
+                     // Container(child: const LoginScreen()),
                       const SizedBox(height: defaultPadding * 2),
                       SizedBox(
                         width: double.infinity,
