@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+<<<<<<< HEAD:lib/screens/profile/doctorProfile/doctor.dart
+import '../../../constants.dart';
+=======
 import '../../constants.dart';
 import '../addPatientDetails.dart';
+>>>>>>> 63366bb5e85385341fc0dd26a74cbeec996905a8:lib/screens/profile/doctor.dart
 
 class DoctorHomeScreen extends StatelessWidget {
   String user = "Name";

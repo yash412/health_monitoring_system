@@ -7,7 +7,7 @@ class Patients {
   String gender = 'male';
   String bloodGr = 'A+';
   late String password;
-
+  List histories = [];
   // Patients(this.name, this.gender, this.bloodGr, this.aadharNo, this.birthDate,
   //     this.contNo, this.address, this.password);
 

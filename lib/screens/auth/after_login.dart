@@ -3,9 +3,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:health_monitoring_system/screens/auth/sign_up_screen.dart';
 
 import '../../constants.dart';
-import '../profile/doctor.dart';
-import '../profile/lab.dart';
-import '../profile/patient.dart';
+import '../profile/doctorProfile/doctor.dart';
+import '../profile/labProfile/lab.dart';
+import '../profile/patientProfile/patient.dart';
 
 class AfterUser extends StatelessWidget {
   @override
