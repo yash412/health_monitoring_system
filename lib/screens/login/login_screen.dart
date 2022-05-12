@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
+import 'package:flutter_svg/svg.dart';
+import '../../constants.dart';
 import 'home_screen.dart';
 
 enum MobileVerificationState {
@@ -8,6 +10,8 @@ enum MobileVerificationState {
 }
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -19,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final phoneController = TextEditingController();
   final otpController = TextEditingController();
 
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   late String verificationId;
 
@@ -33,16 +37,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
     try {
       final authCredential =
-      await _auth.signInWithCredential(phoneAuthCredential);
+          await _auth.signInWithCredential(phoneAuthCredential);
 
       setState(() {
         showLoading = false;
       });
 
-      if(authCredential?.user != null){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen()));
+      if (authCredential.user != null) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomeScreen()));
       }
-
     } on FirebaseAuthException catch (e) {
       setState(() {
         showLoading = false;
@@ -63,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
             hintText: "Phone Number",
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 16,
         ),
         FlatButton(
@@ -73,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
             });
 
             await _auth.verifyPhoneNumber(
-              phoneNumber: phoneController.text,
+              phoneNumber: '+91' + phoneController.text,
               verificationCompleted: (phoneAuthCredential) async {
                 setState(() {
                   showLoading = false;
@@ -84,8 +88,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 setState(() {
                   showLoading = false;
                 });
-                _scaffoldKey.currentState?.showSnackBar(
-                    SnackBar(content: Text(verificationFailed.message as String)));
+                _scaffoldKey.currentState?.showSnackBar(SnackBar(
+                    content: Text(verificationFailed.message as String)));
               },
               codeSent: (verificationId, resendingToken) async {
                 setState(() {
@@ -97,11 +101,11 @@ class _LoginScreenState extends State<LoginScreen> {
               codeAutoRetrievalTimeout: (verificationId) async {},
             );
           },
-          child: Text("SEND"),
+          child: const Text("SEND"),
           color: Colors.blue,
           textColor: Colors.white,
         ),
-        Spacer(),
+        const Spacer(),
       ],
     );
   }
@@ -109,29 +113,30 @@ class _LoginScreenState extends State<LoginScreen> {
   getOtpFormWidget(context) {
     return Column(
       children: [
-        Spacer(),
+        const Spacer(),
         TextField(
           controller: otpController,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             hintText: "Enter OTP",
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 16,
         ),
         FlatButton(
           onPressed: () async {
             PhoneAuthCredential phoneAuthCredential =
-            PhoneAuthProvider.credential(
-                verificationId: verificationId, smsCode: otpController.text);
+                PhoneAuthProvider.credential(
+                    verificationId: verificationId,
+                    smsCode: otpController.text);
 
             signInWithPhoneAuthCredential(phoneAuthCredential);
           },
-          child: Text("VERIFY"),
+          child: const Text("VERIFY"),
           color: Colors.blue,
           textColor: Colors.white,
         ),
-        Spacer(),
+        const Spacer(),
       ],
     );
   }
@@ -142,15 +147,29 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         key: _scaffoldKey,
-        body: Container(
-          child: showLoading
-              ? Center(
-            child: CircularProgressIndicator(),
-          )
-              : currentState == MobileVerificationState.SHOW_MOBILE_FORM_STATE
-              ? getMobileFormWidget(context)
-              : getOtpFormWidget(context),
-          padding: const EdgeInsets.all(16),
-        ));
+        body: Stack(fit: StackFit.expand, children: [
+          SvgPicture.asset(
+            "assets/icons/Sign_Up_bg.svg",
+            fit: BoxFit.cover,
+            height: MediaQuery.of(context).size.height,
+            // Now it takes 100% of our height
+          ),
+          Padding(
+            padding:
+            EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
+            child:  Container(
+
+                  child: showLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : currentState == MobileVerificationState.SHOW_MOBILE_FORM_STATE
+                          ? getMobileFormWidget(context)
+                          : getOtpFormWidget(context),
+                  padding: const EdgeInsets.all(16),
+                ),
+              ),
+           ] ),
+          );
   }
 }
