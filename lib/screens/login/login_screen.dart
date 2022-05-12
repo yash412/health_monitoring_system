@@ -59,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Spacer(),
         TextField(
           controller: phoneController,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             hintText: "Phone Number",
           ),
         ),
