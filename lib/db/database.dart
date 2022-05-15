@@ -54,6 +54,8 @@ class Database {
           doctor.aadharNo = doc.data()['Aadhar no'];
           doctor.gender = doc.data()['gender'];
           doctor.contNo = doc.data()['Contact'];
+        }else{
+          return "Something is wrong";
         }
       }
     });

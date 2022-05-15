@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(prescription());
 
-class prescription extends StatefulWidget {
+class Prescription extends StatefulWidget {
   @override
-  _MyAppState createState() => _MyAppState();
+  _PrescriptionState createState() => _PrescriptionState();
 }
 
-class _MyAppState extends State<prescription> {
+class _PrescriptionState extends State<Prescription> {
   List<DynamicWidget> listDynamic = [];
   List<String> data = [];
 
@@ -76,8 +75,7 @@ class _MyAppState extends State<prescription> {
       ),
     );
 
-    return MaterialApp(
-      home: Scaffold(
+    return  Scaffold(
         appBar: AppBar(
           title: const Text('Prescription'),
         ),
@@ -94,8 +92,7 @@ class _MyAppState extends State<prescription> {
           onPressed: addDynamic,
           child: floatingIcon,
         ),
-      ),
-    );
+      );
   }
 }
 

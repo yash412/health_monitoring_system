@@ -40,10 +40,10 @@ class MyApp extends StatelessWidget {
               focusedBorder: textFieldBorder,
             ),
           ),
-          home: WelcomeScreen(),
+          home: const WelcomeScreen(),
         );
       }
-      return CircularProgressIndicator();
+      return const CircularProgressIndicator();
     });
   }
 }
