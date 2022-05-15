@@ -52,14 +52,14 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                   Padding(
                     padding:
-                        const EdgeInsets.symmetric(vertical: defaultPadding),
+                    const EdgeInsets.symmetric(vertical: defaultPadding),
                     child: SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () => Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => SignInScreen(),//LoginScreen()
+                              builder: (context) => SignInScreen(),
                             )),
                         style: TextButton.styleFrom(
 
