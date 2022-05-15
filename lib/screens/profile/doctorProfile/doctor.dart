@@ -76,7 +76,7 @@ class DoctorHomeScreen extends StatelessWidget {
               child:const Center(child: Text('Add Prescription')),
 
             ),onTap:(){
-              Navigator.push(buildContext,MaterialPageRoute(builder: (context) => AddPatientDetails(_doctors.drName)));
+              Navigator.push(buildContext,MaterialPageRoute(builder: (context) => AddPatientDetails()));
             } ,)),
       ],
     );

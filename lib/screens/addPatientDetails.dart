@@ -2,17 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../constants.dart';
 import '../screens/prescription.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddPatientDetails extends StatelessWidget {
-  String user = "Name";
 
-  AddPatientDetails(this.user, {Key? key}) : super(key: key);
+   AddPatientDetails({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Welcome " + user),
+        actions: [
+          IconButton(
+            onPressed: () {
+              showSearch(context: context,delegate: CustomSearchDelegate());
+            },
+            icon: const Icon(Icons.search),
+          )
+        ],
       ),
       body: Stack(
         fit: StackFit.expand,
@@ -57,7 +65,7 @@ class AddPatientDetails extends StatelessWidget {
                     Navigator.push(
                         buildContext,
                         MaterialPageRoute(
-                            builder: (context) => prescription()));
+                            builder: (context) => Prescription()));
                   },
                 )),
           ],
@@ -65,4 +73,87 @@ class AddPatientDetails extends StatelessWidget {
       ],
     );
   }
+}
+
+class CustomSearchDelegate extends SearchDelegate{
+  static List<Map<String , dynamic>> searchTerms =[] ;
+  final db = FirebaseFirestore.instance.collection('patient').get().then((value) {
+    for (var doc in value.docs) {
+      searchTerms.add(doc.data());
+    }
+  });
+
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+   return[
+     IconButton(onPressed: (){
+       query = '';
+     }, icon: const Icon(Icons.clear))
+   ];
+  }
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(onPressed: (){
+      close(context, null);
+
+    }, icon: const Icon(Icons.arrow_back),);
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+  List matchQuery = [];
+  for(var patient in searchTerms){
+    if(patient['Aadhar no'] == query){
+      matchQuery.add(patient);
+    }
+  }
+  return ListView.builder(itemCount: matchQuery.length,
+  itemBuilder: (context , index){
+    var result = matchQuery[index];
+    return ListTile(
+      title: Container(
+
+            height: 100,
+            width: 200,
+          child: Card(
+          child:Center(
+            child: Row(
+        children: [
+            const SizedBox(height: 50,),
+            Padding(
+                padding:  const EdgeInsets.all(20.0),
+                child :Text(result['Name'])),
+            const SizedBox(width: 50),
+            Container(
+                width:100,
+                child: Text(result['Contact'])),
+            const SizedBox(width: 90,),
+             Container(child: IconButton(onPressed: (){}, icon: const Icon(Icons.open_in_full))),
+
+        ],
+      ),
+          ))),
+    );
+  },
+  );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    List<Map<String , dynamic>> matchQuery = [];
+    for(var patient in searchTerms){
+      if(patient['Aadhar no'] == query){
+        matchQuery.add(patient);
+      }
+    }
+    return ListView.builder(itemCount: matchQuery.length,
+      itemBuilder: (context , index){
+        var result = matchQuery[index];
+        return ListTile(
+          title: Text(result['Name']),
+        );
+      },
+    );}
+
 }
