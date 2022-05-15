@@ -7,61 +7,45 @@ import '../../../constants.dart';
 import 'upload.dart';
 
 class PatientHomeScreen extends StatelessWidget {
-  
-  String user = "Name";
-  PatientHomeScreen(this.user, {Key? key}) : super(key: key);
-  static var  ref = FirebaseFirestore.instance.collection("patient");
-  final Stream<QuerySnapshot> _patientStream =ref.where("Aadhar no",isEqualTo: "789456123963").snapshots();
-  
+  Patients _patients = Patients();
 
-  
+
+  PatientHomeScreen(this._patients, {Key? key}) : super(key: key);
+  static var ref = FirebaseFirestore.instance.collection("patient");
+
+  // final Stream<QuerySnapshot> _patientStream = ref.where("Aadhar no",isEqualTo: "973038857727").snapshots();
+
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-        stream: _patientStream,
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) {
-            print('Something went Wrong');
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          final List storedocs = [];
-          snapshot.data!.docs.map((DocumentSnapshot document) {
-            Map a = document.data() as Map<String, dynamic>;
-            a['id'] = document.id;
-            storedocs.add(a);
-
-          }).toList();
-
-          return Scaffold(
-            appBar: AppBar(
-              title: Text("Welcome " + user),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Welcome " + _patients.name),
+      ),
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          SvgPicture.asset(
+            "assets/icons/Sign_Up_bg.svg",
+            fit: BoxFit.cover,
+            height: MediaQuery
+                .of(context)
+                .size
+                .height,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+                horizontal: defaultPadding, vertical: defaultPadding),
+            child: SafeArea(
+              child: myProfile(context),
             ),
-            body: Stack(
-              fit: StackFit.expand,
-              children: [
-                SvgPicture.asset(
-                  "assets/icons/Sign_Up_bg.svg",
-                  fit: BoxFit.cover,
-                  height: MediaQuery.of(context).size.height,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: defaultPadding, vertical: defaultPadding),
-                  child: SafeArea(
-                    child: myProfile(context, storedocs),
-                  ),
-                )
-              ],
-            ),
-          );
-        });
+          )
+        ],
+      ),
+    );
   }
 
-  Widget myProfile(BuildContext buildContext, List a) {
+
+  Widget myProfile(BuildContext buildContext) {
     return Column(
       children: [
         Row(
@@ -76,12 +60,12 @@ class PatientHomeScreen extends StatelessWidget {
                   ),
                   child: const Center(
                       child: Text(
-                    'History',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 17,
-                        fontStyle: FontStyle.normal),
-                  )),
+                        'History',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 17,
+                            fontStyle: FontStyle.normal),
+                      )),
                 )),
             Container(
                 width: 180,
@@ -93,12 +77,12 @@ class PatientHomeScreen extends StatelessWidget {
                   ),
                   child: const Center(
                       child: Text(
-                    'Profile',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 17,
-                        fontStyle: FontStyle.normal),
-                  )),
+                        'Profile',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 17,
+                            fontStyle: FontStyle.normal),
+                      )),
                 )),
           ],
         ),
@@ -115,32 +99,15 @@ class PatientHomeScreen extends StatelessWidget {
                     ),
                     child: const Center(
                         child: Text(
-                      'Prescription',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 17,
-                          fontStyle: FontStyle.normal),
-                    )),
+                          'Prescription',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 17,
+                              fontStyle: FontStyle.normal),
+                        )),
                   ),
-                  onTap: () => print(a[0]),
+
                 )),
-            // Container(
-            //     width: 180,
-            //     height: 180,
-            //     padding: const EdgeInsets.all(20.0),
-            //     child: Card(
-            //       shape: RoundedRectangleBorder(
-            //         borderRadius: BorderRadius.circular(15.0),
-            //       ),
-            //       child: const Center(
-            //           child: Text(
-            //         'Upload',
-            //         style: TextStyle(
-            //             fontWeight: FontWeight.w400,
-            //             fontSize: 17,
-            //             fontStyle: FontStyle.normal),
-            //       )),
-            //     ),),
 
             Container(
                 width: 180,

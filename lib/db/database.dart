@@ -8,7 +8,6 @@ import 'package:health_monitoring_system/models/labModel.dart';
 class Database {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-
   CollectionReference doctorCollection =
       FirebaseFirestore.instance.collection('doctor');
   CollectionReference patientCollection =
@@ -16,29 +15,69 @@ class Database {
   CollectionReference labCollection =
       FirebaseFirestore.instance.collection('labs');
 
-
-  Future<FutureBuilder<DocumentSnapshot<Object?>>> getPatient(String aadhar)async {
-    return FutureBuilder<DocumentSnapshot>(
-      future: patientCollection.doc().get(),
-      builder:
-          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-
-        if (snapshot.hasError) {
-          return Text("Something went wrong");
+  Future<Patients> fetchPatient(
+      String collection, String aadhar, String pass) async {
+    Patients patients = Patients();
+    await firestore
+        .collection(collection)
+        .where('Aadhar no', isEqualTo: aadhar)
+        .get()
+        .then((event) {
+      for (var doc in event.docs) {
+        if (pass == doc.data()['Password']) {
+          patients.uId = doc.id;
+          patients.name = doc.data()['Name'];
+          patients.address = doc.data()['Address'];
+          patients.aadharNo = doc.data()['Aadhar no'];
+          patients.bloodGr = doc.data()['Blood Group'];
+          patients.birthDate = doc.data()['Birth Date'];
+          patients.gender = doc.data()['Gender'];
+          patients.contNo = doc.data()['Contact'];
         }
+      }
+    });
+    return patients;
+  }
 
-        if (snapshot.hasData && !snapshot.data!.exists) {
-          return Text("Document does not exist");
+  fetchDoctor(String collection, String aadhar, String pass) async {
+    Doctors doctor = Doctors();
+    await firestore
+        .collection(collection)
+        .where('Aadhar no', isEqualTo: aadhar)
+        .get()
+        .then((event) {
+      for (var doc in event.docs) {
+        if (pass == doc.data()['Password']) {
+          doctor.docId = doc.id;
+          doctor.drName = doc.data()['Name'];
+          doctor.address = doc.data()['Clini Address'];
+          doctor.aadharNo = doc.data()['Aadhar no'];
+          doctor.gender = doc.data()['gender'];
+          doctor.contNo = doc.data()['Contact'];
         }
+      }
+    });
+    return doctor;
+  }
 
-        if (snapshot.connectionState == ConnectionState.done) {
-          Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-          return Text("Full Name: ${data['full_name']} ${data['last_name']}");
+  fetchLab(String collection, String aadhar, String pass) async {
+    Labs lab = Labs();
+    await firestore
+        .collection(collection)
+        .where('Aadhar no', isEqualTo: aadhar)
+        .get()
+        .then((event) {
+      for (var doc in event.docs) {
+        if (pass == doc.data()['Password']) {
+          lab.docId = doc.id;
+          lab.labName = doc.data()['Name'];
+          lab.address = doc.data()['Address'];
+          lab.userName = doc.data()['User Name'];
+          lab.contNo = doc.data()['Contact'];
         }
-
-        return Text("loading");
-      },
-    );
+      }
+    });
+    return lab;
   }
 
   Future<void> addLab(Labs lab) {

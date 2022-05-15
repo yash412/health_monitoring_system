@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:health_monitoring_system/models/labModel.dart';
 import '../../../constants.dart';
 import '../../../constants.dart';
 
 class LabHomeScreen extends StatelessWidget {
-  String user = "Name";
 
-  LabHomeScreen(this.user, {Key? key}) : super(key: key);
+  Labs lab ;
+  LabHomeScreen(this.lab, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Welcome " + user),
+        title: Text("Welcome " + lab.labName),
       ),
       body: Stack(
         fit: StackFit.expand,

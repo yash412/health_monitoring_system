@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:health_monitoring_system/models/doctorModel.dart';
 
 import '../../../constants.dart';
 
@@ -8,15 +9,17 @@ import '../../addPatientDetails.dart';
 
 
 class DoctorHomeScreen extends StatelessWidget {
-  String user = "Name";
 
-  DoctorHomeScreen(this.user, {Key? key}) : super(key: key);
+ Doctors _doctors = Doctors();
+  DoctorHomeScreen(this._doctors, {Key? key}) : super(key: key);
+
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Welcome " + user),
+        title: Text("Welcome " + _doctors.drName),
       ),
       body: Stack(
         fit: StackFit.expand,
@@ -73,7 +76,7 @@ class DoctorHomeScreen extends StatelessWidget {
               child:const Center(child: Text('Add Prescription')),
 
             ),onTap:(){
-              Navigator.push(buildContext,MaterialPageRoute(builder: (context) => AddPatientDetails(user)));
+              Navigator.push(buildContext,MaterialPageRoute(builder: (context) => AddPatientDetails(_doctors.drName)));
             } ,)),
       ],
     );

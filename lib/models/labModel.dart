@@ -1,9 +1,10 @@
 
 class Labs {
-String labName ='';
-String userName ='';
-String contNo = '';
-String address = '';
-String password = '';
+late String labName ;
+late String userName;
+late String contNo ;
+late String address ;
+late String password;
+late String docId;
 
 }
