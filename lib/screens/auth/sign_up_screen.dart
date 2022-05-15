@@ -88,6 +88,7 @@ class SignUpScreen extends StatelessWidget {
                             _formKey.currentState!.save();
                             if (user == 0) {
                               _db.addPatient(_patients);
+
                             }
                             if (user == 1) {
                               _db.addDoctor(_doctors);
@@ -95,6 +96,7 @@ class SignUpScreen extends StatelessWidget {
                             if(user == 2){
                               _db.addLab(_lab);
                             }
+
                           }
                         },
                         child: const Text("Sign Up"),

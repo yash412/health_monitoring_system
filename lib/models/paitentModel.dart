@@ -1,4 +1,5 @@
 class Patients {
+  late String uId;
   late String name;
   late String  birthDate;
   late String address;
