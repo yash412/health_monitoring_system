@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:health_monitoring_system/models/doctorModel.dart';
 import 'package:health_monitoring_system/models/paitentModel.dart';
 import 'package:health_monitoring_system/models/labModel.dart';
+
+import '../screens/welcome/welcome_screen.dart';
 
 class Database {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -54,7 +55,7 @@ class Database {
           doctor.aadharNo = doc.data()['Aadhar no'];
           doctor.gender = doc.data()['gender'];
           doctor.contNo = doc.data()['Contact'];
-        }else{
+        } else {
           return "Something is wrong";
         }
       }
@@ -82,47 +83,102 @@ class Database {
     return lab;
   }
 
-  Future<void> addLab(Labs lab) {
-    return labCollection
-        .add({
-          'Name': lab.labName,
-          'User Name': lab.userName,
-          'Contact': lab.contNo,
-          'Address': lab.address,
-          'Password': lab.password
-        })
-        .then((value) => print('User added 12'))
-        .catchError((error) => print("ERROR Failed" + error));
+  addLab(Labs lab, BuildContext context) {
+    // if (  fetchLab('labs', lab.userName, lab.password)['User Name'] != null) {
+    //   showDialog(
+    //       context: context,
+    //       builder: (BuildContext context) =>
+    //           _buildPopupDialog(context, 'Already Registered'));
+    //   return;
+    // }
+    labCollection.add({
+      'Name': lab.labName,
+      'User Name': lab.userName,
+      'Contact': lab.contNo,
+      'Address': lab.address,
+      'Password': lab.password
+    }).then((value) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) =>
+              _buildPopupDialog(context, 'Successfully Register'));
+    }).catchError((error) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) =>
+              _buildPopupDialog(context, 'Something Wrong'));
+    });
   }
 
-  Future<void> addPatient(Patients patients) {
-    return patientCollection
-        .add({
-          'Name': patients.name,
-          'Birth Date': patients.birthDate,
-          'Blood Group': patients.bloodGr,
-          'Gender': patients.gender,
-          'Aadhar no': patients.aadharNo,
-          'Contact': patients.contNo,
-          'Address': patients.address,
-          'Password': patients.password,
-          // 'his_reports':FieldValue.arrayUnion(patients.histories)
-        })
-        .then((value) => print('User added 12'))
-        .catchError((error) => print("ERROR Failed" + error));
+  addPatient(Patients patients, BuildContext context) {
+    patientCollection.add({
+      'Name': patients.name,
+      'Birth Date': patients.birthDate,
+      'Blood Group': patients.bloodGr,
+      'Gender': patients.gender,
+      'Aadhar no': patients.aadharNo,
+      'Contact': patients.contNo,
+      'Address': patients.address,
+      'Password': patients.password,
+      // 'his_reports':FieldValue.arrayUnion(patients.histories)
+    }).then((value) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) =>
+              _buildPopupDialog(context, 'Successfully Register'));
+    }).catchError((error) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) =>
+              _buildPopupDialog(context, 'Something Wrong'));
+    });
   }
 
-  Future<void> addDoctor(Doctors doctors) {
-    return doctorCollection
-        .add({
-          'Name': doctors.drName,
-          'gender': doctors.gender,
-          'Aadhar no': doctors.aadharNo,
-          'Contact': doctors.contNo,
-          'Clini Address': doctors.address,
-          'Password': doctors.password
-        })
-        .then((value) => print('User added 12'))
-        .catchError((error) => print("ERROR Failed" + error));
+  addDoctor(Doctors doctors, BuildContext context) {
+    doctorCollection.add({
+      'Name': doctors.drName,
+      'gender': doctors.gender,
+      'Aadhar no': doctors.aadharNo,
+      'Contact': doctors.contNo,
+      'Clini Address': doctors.address,
+      'Password': doctors.password
+    }).then((value) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) =>
+              _buildPopupDialog(context, 'Successfully Register'));
+    }).catchError((error) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) =>
+              _buildPopupDialog(context, 'Something Wrong'));
+    });
+  }
+
+  Widget _buildPopupDialog(context, String massage) {
+    return AlertDialog(
+      title: Text(massage),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(massage),
+        ],
+      ),
+      actions: <Widget>[
+        FlatButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const WelcomeScreen(),
+                ));
+          },
+          textColor: Theme.of(context).primaryColor,
+          child: const Text('Close'),
+        ),
+      ],
+    );
   }
 }

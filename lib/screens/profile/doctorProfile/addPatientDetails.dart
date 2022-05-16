@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../constants.dart';
-import '../screens/prescription.dart';
+import '../../../../constants.dart';
+import '../../prescription.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddPatientDetails extends StatelessWidget {

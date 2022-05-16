@@ -81,20 +81,19 @@ class SignUpScreen extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: ()  {
                           if (_formKey.currentState!.validate()) {
                             // Sign up form is done
                             // It saved our inputs
                             _formKey.currentState!.save();
                             if (user == 0) {
-                              _db.addPatient(_patients);
-
+                               _db.addPatient(_patients,context);
                             }
                             if (user == 1) {
-                              _db.addDoctor(_doctors);
+                              _db.addDoctor(_doctors,context);
                             }
                             if(user == 2){
-                              _db.addLab(_lab);
+                              _db.addLab(_lab,context);
                             }
 
                           }

@@ -4,7 +4,7 @@ import 'package:health_monitoring_system/models/doctorModel.dart';
 
 import '../../../constants.dart';
 
-import '../../addPatientDetails.dart';
+import 'addPatientDetails.dart';
 
 
 
@@ -20,6 +20,12 @@ class DoctorHomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Welcome " + _doctors.drName),
+        actions: const [
+          IconButton(
+            onPressed: null,
+            icon: Icon(Icons.logout, color: Colors.white),
+          )
+        ],
       ),
       body: Stack(
         fit: StackFit.expand,

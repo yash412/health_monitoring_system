@@ -1,13 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_svg/svg.dart';
-import 'package:health_monitoring_system/models/doctorModel.dart';
-import 'package:health_monitoring_system/models/paitentModel.dart';
+
 import 'package:health_monitoring_system/screens/profile/doctorProfile/doctor.dart';
 import 'package:health_monitoring_system/screens/profile/patientProfile/patient.dart';
-import '../../constants.dart';
-import '../auth/choose_user.dart';
-import 'home_screen.dart';
+
 
 enum MobileVerificationState {
   SHOW_MOBILE_FORM_STATE,
@@ -18,13 +15,7 @@ class LoginScreen extends StatefulWidget {
    LoginScreen( this.obj,this.phone, this.userType,{Key? key}) : super(key: key);
   String phone ,userType;
 
-  // static Doctors _doctors = Doctors();
-  // static Patients _patients = Patients();
   var obj;
-  static void setLoginVar(obj){
-    obj = obj;
-  }
-
 
 
   @override
@@ -38,7 +29,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final otpController = TextEditingController();
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
   late String verificationId;
 
   bool showLoading = false;

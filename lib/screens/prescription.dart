@@ -10,7 +10,7 @@ class _PrescriptionState extends State<Prescription> {
   List<DynamicWidget> listDynamic = [];
   List<String> data = [];
 
-  Icon floatingIcon = new Icon(Icons.add);
+  Icon floatingIcon = Icon(Icons.add);
 
   addDynamic() {
     if (data.length != 0) {
@@ -65,13 +65,11 @@ class _PrescriptionState extends State<Prescription> {
       ),
     );
 
-    Widget submitButton = Container(
-      child: RaisedButton(
-        onPressed: submitData,
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Text('Submit Data'),
-        ),
+    Widget submitButton = RaisedButton(
+      onPressed: submitData,
+      child: const Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Text('Submit Data'),
       ),
     );
 
@@ -80,11 +78,11 @@ class _PrescriptionState extends State<Prescription> {
           title: const Text('Prescription'),
         ),
         body: Container(
-          margin: EdgeInsets.all(10.0),
+          margin: const EdgeInsets.all(10.0),
           child: Column(
             children: <Widget>[
-              data.length == 0 ? dynamicTextField : result,
-              data.length == 0 ? submitButton : Container(),
+              data.isEmpty ? dynamicTextField : result,
+              data.isEmpty ? submitButton : Container(),
             ],
           ),
         ),
@@ -97,7 +95,7 @@ class _PrescriptionState extends State<Prescription> {
 }
 
 class DynamicWidget extends StatelessWidget {
-  TextEditingController controller = new TextEditingController();
+  TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
