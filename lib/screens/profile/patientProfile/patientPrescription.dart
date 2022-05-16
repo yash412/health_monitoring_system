@@ -17,9 +17,8 @@ class PatientPrescription extends StatefulWidget {
 class _PatientPrescriptionState extends State<PatientPrescription> {
   PrescriptionModel _prescriptionModel = PrescriptionModel();
 
-  final _databasePrescription = FirebaseFirestore.instance
-      .collection('prescription')
-      .where('uID', isEqualTo: PatientPrescription._patients.uId);
+  final _databasePrescription =
+      FirebaseFirestore.instance.collection('prescription');
 
   var _data = [];
 
@@ -30,8 +29,10 @@ class _PatientPrescriptionState extends State<PatientPrescription> {
           title: const Text('Prescriptions'),
           actions: [
             IconButton(
-                onPressed: () => _fetch(),
-                icon: Icon(Icons.refresh))
+                onPressed: () async {
+                  _data = await _fetch();
+                },
+                icon: const Icon(Icons.refresh))
           ],
         ),
         body: ListView.builder(
@@ -63,18 +64,23 @@ class _PatientPrescriptionState extends State<PatientPrescription> {
             }));
   }
 
-  _fetch()  {
-
-   _databasePrescription.get().then((value) {
+  Future<List>_fetch() async {
+    var data = [];
+    await _databasePrescription
+        .where('uID', isEqualTo: PatientPrescription._patients.uId)
+        .get()
+        .then((value) {
       for (var doc in value.docs) {
         _prescriptionModel.prescriptionID = doc.id;
         _prescriptionModel.uID = doc.data()['uID'];
         _prescriptionModel.data = doc.data()['prescription_list'];
         _prescriptionModel.date = doc.data()['date'];
         _prescriptionModel.time = doc.data()['time'];
-        _data.add(_prescriptionModel);
+        data.add(_prescriptionModel);
+        print(_prescriptionModel.uID);
       }
     });
+    return data;
   }
 
   Widget _detailPrescription(context, List<dynamic> data) {
