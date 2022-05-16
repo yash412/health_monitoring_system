@@ -1,17 +1,19 @@
 
 import 'package:flutter/material.dart';
-import 'package:health_monitoring_system/models/paitentModel.dart';
+
+import '../../../models/doctorModel.dart';
 
 
-class PatientProfile extends StatefulWidget {
-  Patients patients = Patients();
-   PatientProfile(this.patients ,{Key? key}) : super(key: key);
+
+class DoctorProfile extends StatefulWidget {
+  Doctors doctor = Doctors();
+  DoctorProfile(this.doctor ,{Key? key}) : super(key: key);
 
   @override
   _HomePageWidgetState createState() => _HomePageWidgetState();
 }
 
-class _HomePageWidgetState extends State<PatientProfile> {
+class _HomePageWidgetState extends State<DoctorProfile> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -55,7 +57,7 @@ class _HomePageWidgetState extends State<PatientProfile> {
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 color: const Color(0xFFF5F5F5),
                 child: Text(
-                  widget.patients.name,
+                  widget.doctor.drName,
                   // style: FlutterFlowTheme.of(context).bodyText1,
                 ),
               ),
@@ -70,22 +72,7 @@ class _HomePageWidgetState extends State<PatientProfile> {
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 color: const Color(0xFFF5F5F5),
                 child: Text(
-                  widget.patients.birthDate,
-                  // style: FlutterFlowTheme.of(context).bodyText1,
-                ),
-              ),
-              const SizedBox(height: 25),
-              const Text(
-                'Aadhar:-',
-                // style: FlutterFlowTheme.of(context).bodyText1,
-                style: TextStyle(height: 2, fontSize: 20,fontFamily: 'Poppins',fontWeight:FontWeight.w600 ),
-              ),
-              const SizedBox(height: 5),
-              Card(
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                color: const Color(0xFFF5F5F5),
-                child: Text(
-                  widget.patients.aadharNo,
+                  widget.doctor.aadharNo,
                   // style: FlutterFlowTheme.of(context).bodyText1,
 
                 ),
@@ -102,7 +89,7 @@ class _HomePageWidgetState extends State<PatientProfile> {
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 color: const Color(0xFFF5F5F5),
                 child: Text(
-                  widget.patients.contNo,
+                  widget.doctor.contNo,
                   // style: FlutterFlowTheme.of(context).bodyText1,
                 ),
               ),
@@ -118,27 +105,10 @@ class _HomePageWidgetState extends State<PatientProfile> {
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 color: const Color(0xFFF5F5F5),
                 child: Text(
-                  widget.patients.address,
+                  widget.doctor.address,
                   // style: FlutterFlowTheme.of(context).bodyText1,
                 ),
-              ),
-              const SizedBox(height: 25),
-              const Text(
-                'Blood Group:-',
-                // style: FlutterFlowTheme.of(context).bodyText1,
-                style: TextStyle(height: 2, fontSize: 20,fontFamily: 'Poppins',fontWeight:FontWeight.w600 ),
-              ),
-              const SizedBox(height: 15),
-
-               Card(
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-
-                color: const Color(0xFFF5F5F5),
-                child: Text(
-                  widget.patients.bloodGr,
-                  // style: FlutterFlowTheme.of(context).bodyText1,
-                ),
-              ),
+              )
             ],
           ),
         ),

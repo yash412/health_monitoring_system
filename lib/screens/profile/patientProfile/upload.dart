@@ -1,14 +1,16 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:health_monitoring_system/models/paitentModel.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../constants.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class UploadDocument extends StatefulWidget {
-  final  db ;
-  UploadDocument( this.db, {Key? key}) : super(key: key);
+  final db;
+  Patients patient = Patients();
+  UploadDocument(this.patient, this.db, {Key? key}) : super(key: key);
   // List<Map<String , dynamic>> urls = [];
 
   @override
@@ -19,7 +21,8 @@ class _UploadDocumentState extends State<UploadDocument> {
   /// Variables
   File? imageFile;
 
-  List<Map<String , dynamic>> urls = [];
+  List<Map<String, dynamic>> urls = [];
+
   /// Widget
   @override
   Widget build(BuildContext context) {
@@ -72,20 +75,30 @@ class _UploadDocumentState extends State<UploadDocument> {
                       },
                       child: const Text("PICK FROM CAMERA"),
                     ),
+                  ],
+                ),
+              )
+            : SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Container(
+                      child: Image.file(
+                        imageFile!,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                     RaisedButton(
                       color: Colors.lightGreenAccent,
-                      onPressed: () {
-                        _uploadInDatabase();
+                      onPressed: () async {
+                        await _uploadInDatabase();
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                _buildPopupDialog(context, ' Done'));
                       },
                       child: const Text("Upload"),
                     )
                   ],
-                ),
-              )
-            : Container(
-                child: Image.file(
-                  imageFile!,
-                  fit: BoxFit.cover,
                 ),
               ));
   }
@@ -108,7 +121,6 @@ class _UploadDocumentState extends State<UploadDocument> {
   _getFromCamera() async {
     PickedFile? pickedFile = await ImagePicker().getImage(
       source: ImageSource.camera,
-
     );
     if (pickedFile != null) {
       setState(() {
@@ -120,16 +132,46 @@ class _UploadDocumentState extends State<UploadDocument> {
   _uploadInDatabase() async {
     final _storage = FirebaseStorage.instance;
     final _db = FirebaseFirestore.instance;
+    String imageName = widget.patient.uId;
+    String dateTime = DateTime.now().toString();
+    String image = imageName+dateTime;
     if (imageFile != null) {
-     var snapshot = await _storage
+      var snapshot = await _storage
           .ref()
-          .child('userReportsHistory/imagename')
+          .child('userReportsHistory/'+image+dateTime)
           .putFile(imageFile!);
-     var downloadUrl = await snapshot.ref.getDownloadURL();
-     setState(() {
-       urls.add({"imageName": 'name', 'url': downloadUrl} );
-       _db.collection('patient').doc('a4USOOrGWP5f8ss6d1h6').update(urls[0]);
-     });
+      var downloadUrl = await snapshot.ref.getDownloadURL();
+      setState(() {
+        urls.add({"imageName": image, 'url': downloadUrl});
+      });
+      _db
+          .collection('patient')
+          .doc(widget.patient.uId)
+          .update({'history': urls});
     }
   }
+
+  Widget _buildPopupDialog(context, String massage) {
+    return AlertDialog(
+      title: Text(massage),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(massage),
+        ],
+      ),
+      actions: <Widget>[
+        FlatButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+
+          },
+          textColor: Theme.of(context).primaryColor,
+          child: const Text('Close'),
+        ),
+      ],
+    );
+  }
 }
+

@@ -14,6 +14,12 @@ class LabHomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Welcome " + lab.labName),
+        actions: const [
+          IconButton(
+            onPressed: null,
+            icon: Icon(Icons.logout, color: Colors.white),
+          )
+        ],
       ),
       body: Stack(
         fit: StackFit.expand,
