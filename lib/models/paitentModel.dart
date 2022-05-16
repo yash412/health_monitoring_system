@@ -1,4 +1,4 @@
-class Patients {
+class Patients{
   late String uId;
   late String name;
   late String  birthDate;
@@ -8,7 +8,7 @@ class Patients {
   String gender = 'male';
   String bloodGr = 'A+';
   late String password;
-  List histories = [];
+  List<dynamic> histories = [];
   // Patients(this.name, this.gender, this.bloodGr, this.aadharNo, this.birthDate,
   //     this.contNo, this.address, this.password);
 

@@ -27,6 +27,7 @@ class Database {
       for (var doc in event.docs) {
         if (pass == doc.data()['Password']) {
           patients.uId = doc.id;
+          patients.histories = doc.data()['history'];
           patients.name = doc.data()['Name'];
           patients.address = doc.data()['Address'];
           patients.aadharNo = doc.data()['Aadhar no'];
@@ -114,6 +115,7 @@ class Database {
     patientCollection.add({
       'Name': patients.name,
       'Birth Date': patients.birthDate,
+      'history': patients.histories,
       'Blood Group': patients.bloodGr,
       'Gender': patients.gender,
       'Aadhar no': patients.aadharNo,

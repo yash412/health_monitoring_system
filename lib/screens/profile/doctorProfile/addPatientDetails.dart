@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-<<<<<<< HEAD:lib/screens/profile/doctorProfile/addPatientDetails.dart
 import '../../../../constants.dart';
-import '../../prescription.dart';
-=======
-import 'package:health_monitoring_system/screens/auth/sign_in_screen.dart';
-import '../../constants.dart';
-import '../screens/prescription.dart';
->>>>>>> 1c117402b577b876b51ca471f3312bf95c7935ff:lib/screens/addPatientDetails.dart
+import 'prescription.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddPatientDetails extends StatelessWidget {
@@ -51,7 +46,7 @@ class AddPatientDetails extends StatelessWidget {
     return Column(
       children: [
         Row(
-          children: [
+          children: const [
             // Container(
             //     // width: 180,
             //     // height: 180,
@@ -81,13 +76,9 @@ class AddPatientDetails extends StatelessWidget {
 }
 
 class CustomSearchDelegate extends SearchDelegate {
-  static List<Map<String, dynamic>> searchTerms = [];
+  static List<QueryDocumentSnapshot<Map<String, dynamic>>> searchTerms = [];
   final db =
-      FirebaseFirestore.instance.collection('patient').get().then((value) {
-    for (var doc in value.docs) {
-      searchTerms.add(doc.data());
-    }
-  });
+      FirebaseFirestore.instance.collection('patient');
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -112,6 +103,9 @@ class CustomSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
+     db.where('Aadhar no',isEqualTo: query).get().then((value){
+       searchTerms = value.docs;
+     });
     List matchQuery = [];
     for (var patient in searchTerms) {
       if (patient['Aadhar no'] == query) {
@@ -159,7 +153,7 @@ class CustomSearchDelegate extends SearchDelegate {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Prescription()));
+                                      builder: (context) => Prescription(searchTerms[index].id)));
                             },
                             icon: const Icon(Icons.add))),
                   ],
@@ -175,7 +169,7 @@ class CustomSearchDelegate extends SearchDelegate {
     List<Map<String, dynamic>> matchQuery = [];
     for (var patient in searchTerms) {
       if (patient['Aadhar no'] == query) {
-        matchQuery.add(patient);
+        matchQuery.add(patient.data());
       }
     }
     return ListView.builder(
