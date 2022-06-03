@@ -92,7 +92,15 @@ class _DoctorRegistrationState extends State<DoctorRegistration> {
           TextFormField(
             keyboardType: TextInputType.number,
             // decoration: InputDecoration(hintText: "test@email.com"),
-            // validator: EmailValidator(errorText: "Use a valid email!"),
+            validator: (String? value) {
+              Pattern pattern = r'^(?:[+0]9)?[0-9]{12}$';
+              RegExp regex = RegExp(pattern.toString());
+              if (!regex.hasMatch(value!)) {
+                return 'Enter Valid number';
+              } else {
+                return null;
+              }
+            },
 
             onSaved: (uID) => widget.doctors.aadharNo = uID!,
           ),

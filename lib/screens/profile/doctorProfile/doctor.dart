@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:health_monitoring_system/models/doctorModel.dart';
+import 'package:health_monitoring_system/screens/profile/doctorProfile/doctorProfile.dart';
 
 import '../../../constants.dart';
 
@@ -54,19 +55,16 @@ class DoctorHomeScreen extends StatelessWidget {
             width: 180,
             height: 180,
             padding: const EdgeInsets.all(20.0),
-            child: Card(
+            child: GestureDetector(child : Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15.0),
+
               ),
-              child: const Center(
-                  child: Text(
-                'Profile',
-                style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 17,
-                    fontStyle: FontStyle.normal),
-              )),
-            )),
+              child:const Center(child: Text('Profile')),
+
+            ),onTap:(){
+              Navigator.push(buildContext,MaterialPageRoute(builder: (context) => DoctorProfile(_doctors)));
+            } ,)),
         Container(
             width: 180,
             height: 180,

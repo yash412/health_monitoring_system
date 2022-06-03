@@ -4,11 +4,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:health_monitoring_system/models/prescriptionModel.dart';
 
 class PatientPrescription extends StatefulWidget {
-  static Patients _patients = Patients();
+ Patients _patients = Patients();
 
-  PatientPrescription({Key? key}) : super(key: key);
+  PatientPrescription(this._patients,{Key? key}) : super(key: key);
 
-  static void set(Patients patients) => _patients = patients;
+  // static void set(Patients patients) => _patients = patients;
 
   @override
   State<PatientPrescription> createState() => _PatientPrescriptionState();
@@ -17,9 +17,8 @@ class PatientPrescription extends StatefulWidget {
 class _PatientPrescriptionState extends State<PatientPrescription> {
   PrescriptionModel _prescriptionModel = PrescriptionModel();
 
-  final _databasePrescription = FirebaseFirestore.instance
-      .collection('prescription')
-      .where('uID', isEqualTo: PatientPrescription._patients.uId);
+  final _databasePrescription =
+      FirebaseFirestore.instance.collection('prescription');
 
   var _data = [];
 
@@ -30,8 +29,12 @@ class _PatientPrescriptionState extends State<PatientPrescription> {
           title: const Text('Prescriptions'),
           actions: [
             IconButton(
-                onPressed: () => _fetch(),
-                icon: Icon(Icons.refresh))
+                onPressed: ()  async {
+
+                    _data = await _fetch();
+
+                },
+                icon: const Icon(Icons.refresh))
           ],
         ),
         body: ListView.builder(
@@ -41,11 +44,11 @@ class _PatientPrescriptionState extends State<PatientPrescription> {
                   height: 20,
                   padding: const EdgeInsets.all(20.0),
                   child: GestureDetector(
-                    // onTap: () {
-                    //   setState(() {
-                    //     _detailPrescription(context, _data[index1].data);
-                    //   });
-                    // },
+                    onTap: () {
+                      setState(() {
+                        _detailPrescription(context, _data[index1].data);
+                      });
+                    },
                     child: Card(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
@@ -63,18 +66,27 @@ class _PatientPrescriptionState extends State<PatientPrescription> {
             }));
   }
 
-  _fetch()  {
-
-   _databasePrescription.get().then((value) {
-      for (var doc in value.docs) {
-        _prescriptionModel.prescriptionID = doc.id;
-        _prescriptionModel.uID = doc.data()['uID'];
-        _prescriptionModel.data = doc.data()['prescription_list'];
-        _prescriptionModel.date = doc.data()['date'];
-        _prescriptionModel.time = doc.data()['time'];
-        _data.add(_prescriptionModel);
-      }
+  Future<List>_fetch() async {
+    var data = [];
+    setState(()  {
+       _databasePrescription
+          .where('uID', isEqualTo: widget._patients.uId)
+          .get()
+          .then((value) {
+        for (var doc in value.docs) {
+          _prescriptionModel.prescriptionID = doc.id;
+          _prescriptionModel.uID = doc.data()['uID'];
+          _prescriptionModel.data = doc.data()['prescription_list'];
+          _prescriptionModel.date = doc.data()['date'];
+          _prescriptionModel.time = doc.data()['time'];
+          data.addAll(_prescriptionModel.data);
+          print(_prescriptionModel.uID);
+        }
+      }).onError((error, stackTrace) {
+        print(error);
+      });
     });
+    return data;
   }
 
   Widget _detailPrescription(context, List<dynamic> data) {

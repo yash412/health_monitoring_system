@@ -9,20 +9,13 @@ class PatientHistory extends StatefulWidget {
 
   PatientHistory(this.patients, {Key? key}) : super(key: key);
 
-
   @override
   State<PatientHistory> createState() => _PatientHistoryState();
 }
 
 class _PatientHistoryState extends State<PatientHistory> {
-// _getImage(var url){
-//   final httpsReference = FirebaseStorage.instance.refFromURL(
-//       url);
-//  return httpsReference.getData();
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Reports'),
@@ -30,7 +23,17 @@ class _PatientHistoryState extends State<PatientHistory> {
       body: ListView.builder(
           itemCount: widget.patients.histories.length,
           itemBuilder: (context, index) {
-            return Image.network(widget.patients.histories[index][1]['url']);
+            return Column(
+              children: [
+                const SizedBox(height: 10,),
+                SizedBox(
+                  height: 500,
+                  width: 500,
+                  child: Image.network(widget.patients.histories[index]['url']),
+                ),
+                const SizedBox(height: 5,),
+              ],
+            );
           }),
     );
   }

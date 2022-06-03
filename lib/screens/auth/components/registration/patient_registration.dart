@@ -120,7 +120,15 @@ class _PatientRegistrationState extends State<PatientRegistration> {
           TextFormField(
             keyboardType: TextInputType.number,
             // decoration: InputDecoration(hintText: "test@email.com"),
-            // validator: EmailValidator(errorText: "Use a valid email!"),
+             validator: (String? value) {
+                          Pattern pattern = r'^(?:[+0]9)?[0-9]{12}$';
+                          RegExp regex = RegExp(pattern.toString());
+                          if (!regex.hasMatch(value!)) {
+                            return 'Enter Valid  number';
+                          } else {
+                            return null;
+                          }
+                        },
             onSaved: (uID) => widget.patients.aadharNo = uID!,
           ),
 
@@ -135,7 +143,7 @@ class _PatientRegistrationState extends State<PatientRegistration> {
               Pattern pattern = r'^(?:[+0]9)?[0-9]{10}$';
               RegExp regex = RegExp(pattern.toString());
               if (!regex.hasMatch(value!)) {
-                return 'Enter Valid mobile number';
+                return 'Enter Valid number';
               } else {
                 return null;
               }

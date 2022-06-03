@@ -140,9 +140,11 @@ class _SignInScreenState extends State<SignInScreen> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          // LoginScreen(_patients,_patients.contNo ,dropDownValue),
-                                          PatientHomeScreen(_patients),
+                                      builder: (context) => LoginScreen(
+                                          _patients,
+                                          _patients.contNo,
+                                          dropDownValue),
+                                      //   PatientHomeScreen(_patients),
                                     ));
                               }
                               if (dropDownValue == 'Doctor') {
@@ -152,8 +154,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          // LoginScreen(_doctors, _doctors.contNo,dropDownValue),
-                                          DoctorHomeScreen(_doctors),
+                                          LoginScreen(_doctors, _doctors.contNo,dropDownValue),
+                                           // DoctorHomeScreen(_doctors),
                                     ));
                               }
                               if (dropDownValue == 'LAB') {

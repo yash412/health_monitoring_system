@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:health_monitoring_system/models/labModel.dart';
 import '../../../constants.dart';
 import '../../../constants.dart';
+import '../../welcome/welcome_screen.dart';
 
 class LabHomeScreen extends StatelessWidget {
 
@@ -14,10 +15,12 @@ class LabHomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Welcome " + lab.labName),
-        actions: const [
+        actions: [
           IconButton(
-            onPressed: null,
-            icon: Icon(Icons.logout, color: Colors.white),
+            onPressed: (){
+              Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => const WelcomeScreen()));
+            },
+            icon: const Icon(Icons.logout, color: Colors.white),
           )
         ],
       ),
