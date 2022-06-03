@@ -55,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
         }
         if(widget.userType == 'Patient'){
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => PatientHomeScreen(widget.obj)));
+              context, MaterialPageRoute(builder: (context) => PatientHomeScreen(widget.obj,_auth)));
         }
       }
     } on FirebaseAuthException catch (e) {
@@ -77,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
             showLoading = false;
 
-          //signInWithPhoneAuthCredential(phoneAuthCredential);
+          // signInWithPhoneAuthCredential(phoneAuthCredential);
         },
         verificationFailed: (verificationFailed) async {
 

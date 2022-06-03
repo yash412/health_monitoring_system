@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:health_monitoring_system/models/paitentModel.dart';
 import 'package:health_monitoring_system/screens/profile/patientProfile/patientHistory.dart';
 import 'package:health_monitoring_system/screens/profile/patientProfile/patientPrescription.dart';
+import 'package:health_monitoring_system/screens/welcome/welcome_screen.dart';
 import '../../../constants.dart';
 import 'PatientProfile.dart';
 import 'upload.dart';
@@ -13,19 +15,24 @@ import 'upload.dart';
 class PatientHomeScreen extends StatelessWidget {
   Patients _patients = Patients();
 
-  PatientHomeScreen(this._patients, {Key? key}) : super(key: key);
+
+  PatientHomeScreen(this._patients,this.auth, {Key? key}) : super(key: key);
+var auth;
   static var ref = FirebaseFirestore.instance.collection("patient");
 
-  // final Stream<QuerySnapshot> _patientStream = ref.where("Aadhar no",isEqualTo: "973038857727").snapshots();
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Welcome " + _patients.name),
-        actions: const [
+        actions: [
           IconButton(
-            onPressed: null,
+            onPressed: (){
+              auth.signOut();
+                  Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => WelcomeScreen()));
+            },
             icon: Icon(Icons.logout, color: Colors.white),
           )
         ],
@@ -108,11 +115,11 @@ class PatientHomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(20.0),
                 child: GestureDetector(
                   onTap: () {
-                    PatientPrescription.set(_patients);
+
                     Navigator.push(
                         buildContext,
                         MaterialPageRoute(
-                            builder: (context) => PatientPrescription()));
+                            builder: (context) => PatientPrescription(_patients)));
                   },
                   child: Card(
                     shape: RoundedRectangleBorder(
